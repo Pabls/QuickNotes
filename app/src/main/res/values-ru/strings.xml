@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Быстрые заметки</string>
+
+    <string name="tab_layout.text.new_note">новая заметка</string>
+    <string name="tab_layout.text.new_drawing">новый рисунок</string>
+    <string name="tab_layout.text.my_notes">мои заметки</string>
+
+</resources>

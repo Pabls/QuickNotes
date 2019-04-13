@@ -1,18 +1,19 @@
-package com.ar4i.quicknotes;
+package com.ar4i.quicknotes.presentation.main.view;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
+import com.ar4i.quicknotes.R;
+import com.ar4i.quicknotes.presentation.main.NavigationAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
     //==========================================start Fields========================================
 
-    FragmentPagerAdapter adapter;
+    NavigationAdapter adapter;
 
     //-------------------------------------------end Fields-----------------------------------------
 

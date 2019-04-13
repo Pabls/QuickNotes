@@ -5,4 +5,7 @@
     <string name="tab_layout.text.new_drawing">NEW DRAWING</string>
     <string name="tab_layout.text.my_notes">MY NOTES</string>
 
+    <string name="new_note_fragment.edittext.hint.title">Note title</string>
+    <string name="new_note_fragment.edittext.hint.body">Your note</string>
+
 </resources>

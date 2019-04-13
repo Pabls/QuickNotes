@@ -1,6 +1,10 @@
-package com.ar4i.quicknotes;
+package com.ar4i.quicknotes.presentation.main;
 
 import android.content.Context;
+
+import com.ar4i.quicknotes.R;
+import com.ar4i.quicknotes.presentation.newnote.view.NewNoteFragment;
+import com.ar4i.quicknotes.presentation.notes.view.NotesFragment;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,7 +20,7 @@ public class NavigationAdapter extends FragmentPagerAdapter {
 
     //==========================================start Fields========================================
 
-    private static final int SCREENS_COUNT = 3;
+    private static final int SCREENS_COUNT = 2;
     private Context context;
 
     //-------------------------------------------end Fields-----------------------------------------
@@ -31,10 +35,10 @@ public class NavigationAdapter extends FragmentPagerAdapter {
                 return NotesFragment.newInstance();
             case 1:
                 return NewNoteFragment.newInstance();
-            case 2:
-                return NewDrawFragment.newInstance();
+//            case 2:
+//                return NewDrawFragment.newInstance();
             default:
-                return null;
+                return NotesFragment.newInstance();
         }
     }
 
@@ -51,8 +55,8 @@ public class NavigationAdapter extends FragmentPagerAdapter {
                 return getString(R.string.tab_layout_text_my_notes);
             case 1:
                 return getString(R.string.tab_layout_text_new_note);
-            case 2:
-                return getString(R.string.tab_layout_text_new_drawing);
+//            case 2:
+//                return getString(R.string.tab_layout_text_new_drawing);
             default:
                 return null;
         }

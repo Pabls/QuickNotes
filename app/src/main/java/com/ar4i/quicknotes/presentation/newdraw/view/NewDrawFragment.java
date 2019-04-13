@@ -1,5 +1,4 @@
-package com.ar4i.quicknotes;
-
+package com.ar4i.quicknotes.presentation.newdraw.view;
 
 import android.os.Bundle;
 
@@ -9,16 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class NewNoteFragment extends Fragment {
+import com.ar4i.quicknotes.R;
 
-    public static NewNoteFragment newInstance() {
-        return new NewNoteFragment();
+public class NewDrawFragment extends Fragment {
+
+    public static NewDrawFragment newInstance() {
+        return new NewDrawFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_new_note, container, false);
+        return inflater.inflate(R.layout.fragment_new_draw, container, false);
     }
 
 }

@@ -1,8 +1,10 @@
-package com.ar4i.quicknotes.presentation.main.view;
+package com.ar4i.quicknotes.presentation.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.ar4i.quicknotes.R;
@@ -10,6 +12,12 @@ import com.ar4i.quicknotes.presentation.main.NavigationAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static Intent getStartIntent(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        return intent;
+    }
 
     //==========================================start Fields========================================
 
@@ -43,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new NavigationAdapter(getSupportFragmentManager(), this);
         vpSlider.setAdapter(adapter);
         tbMenu.setupWithViewPager(vpSlider);
+
     }
 
     //-------------------------------------------end Private methods--------------------------------

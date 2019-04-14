@@ -1,4 +1,4 @@
-package com.ar4i.quicknotes.app.di.application;
+package com.ar4i.quicknotes.app.di.modules;
 
 import com.ar4i.quicknotes.app.App;
 

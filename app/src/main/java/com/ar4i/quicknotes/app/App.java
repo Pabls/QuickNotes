@@ -2,9 +2,10 @@ package com.ar4i.quicknotes.app;
 
 import android.app.Application;
 
-import com.ar4i.quicknotes.app.di.application.ApplicationComponent;
-import com.ar4i.quicknotes.app.di.application.DaggerApplicationComponent;
-import com.ar4i.quicknotes.app.di.application.ApplicationModule;
+import com.ar4i.quicknotes.app.di.components.ApplicationComponent;
+import com.ar4i.quicknotes.app.di.components.DaggerApplicationComponent;
+import com.ar4i.quicknotes.app.di.modules.ApplicationModule;
+import com.google.firebase.FirebaseApp;
 
 public class App extends Application {
 
@@ -21,6 +22,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         initApplicationComponent();
+        //FirebaseApp.initializeApp(this);
     }
 
     //-------------------------------------------end Lifecycle--------------------------------------

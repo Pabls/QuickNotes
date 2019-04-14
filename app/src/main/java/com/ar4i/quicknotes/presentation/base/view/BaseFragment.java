@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.ar4i.quicknotes.app.App;
+import com.ar4i.quicknotes.app.di.components.ApplicationComponent;
 import com.ar4i.quicknotes.presentation.base.presenter.IPresenter;
 
 import androidx.annotation.NonNull;
@@ -52,6 +54,15 @@ public abstract class BaseFragment extends Fragment implements IMvpView {
     }
 
     //-------------------------------------------end -----------------------------------------------
+
+
+    //==========================================start Protected methods=============================
+
+    protected ApplicationComponent getComponent() {
+        return App.getApplicationComponent();
+    }
+
+    //-------------------------------------------end Protected methods------------------------------
 
 
     //==========================================start Abstract methods==============================

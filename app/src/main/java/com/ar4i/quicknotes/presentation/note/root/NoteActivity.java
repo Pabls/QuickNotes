@@ -3,10 +3,9 @@ package com.ar4i.quicknotes.presentation.note.root;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.widget.FrameLayout;
 
 import com.ar4i.quicknotes.R;
-import com.ar4i.quicknotes.presentation.base.view.BaseFragment;
+import com.ar4i.quicknotes.presentation.base.views.BaseFragment;
 
 public class NoteActivity extends AppCompatActivity {
 

@@ -7,10 +7,10 @@
     <string name="sign_in_activity.text.create_account_of_login">Перед использованием системы
         необходимо создать аккаунт. Eсли Вы это уже делали, авторизуйтесь</string>
     <string name="sign_in_activity.edittext.hint.email">Email</string>
-    <string name="sign_in_activity.edittext.hint.password">Пароль</string>
+    <string name="sign_in_activity.edittext.hint.password">Пароль(Мин.6 символов)</string>
     <string name="sign_in_activity.button.text.enter">вход</string>
     <string name="sign_in_activity.text_input_layout.text.invalid_email">невалидный email</string>
-    <string name="sign_in_activity.text_input_layout.text.invalid_password">минимум 4 символа</string>
+    <string name="sign_in_activity.text_input_layout.text.invalid_password">минимум 6 символа</string>
 
     <string name="tab_layout.text.new_note">новая заметка</string>
     <string name="tab_layout.text.new_drawing">новый рисунок</string>

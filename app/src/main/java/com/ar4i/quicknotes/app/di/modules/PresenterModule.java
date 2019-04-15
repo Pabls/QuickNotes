@@ -1,8 +1,10 @@
 package com.ar4i.quicknotes.app.di.modules;
 
-import com.ar4i.quicknotes.data.repository.firebaseauth.FirebaseAuthRepository;
-import com.ar4i.quicknotes.data.repository.resource.ResourceRepository;
-import com.ar4i.quicknotes.domain.resource.ResourceInteractor;
+import com.ar4i.quicknotes.data.repositories.database.DatabaseRepository;
+import com.ar4i.quicknotes.data.repositories.firebaseauth.FirebaseAuthRepository;
+import com.ar4i.quicknotes.data.repositories.resources.ResourceRepository;
+import com.ar4i.quicknotes.domain.notes.NotesInteractor;
+import com.ar4i.quicknotes.domain.resources.ResourceInteractor;
 import com.ar4i.quicknotes.domain.signin.SignInInteractor;
 
 import dagger.Module;
@@ -18,5 +20,10 @@ public class PresenterModule {
     @Provides
     ResourceInteractor provideResourceInteractor(ResourceRepository resourceRepository) {
         return new ResourceInteractor(resourceRepository);
+    }
+
+    @Provides
+    NotesInteractor provideNotesInteractor(DatabaseRepository databaseRepository){
+        return new NotesInteractor(databaseRepository);
     }
 }

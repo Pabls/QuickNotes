@@ -2,8 +2,8 @@ package com.ar4i.quicknotes.domain.signin;
 
 import android.util.Patterns;
 
-import com.ar4i.quicknotes.data.repository.firebaseauth.IFirebaseAuthRepository;
-import com.google.firebase.auth.FirebaseUser;
+import com.ar4i.quicknotes.data.models.UserVm;
+import com.ar4i.quicknotes.data.repositories.firebaseauth.IFirebaseAuthRepository;
 
 import java.util.regex.Pattern;
 
@@ -11,7 +11,7 @@ import io.reactivex.Single;
 
 public class SignInInteractor implements ISignInInteractor {
 
-    private static final int MIN_PASSWORD_LENGTH = 4;
+    private static final int MIN_PASSWORD_LENGTH = 6;
     private static final Pattern PATTERN = Patterns.EMAIL_ADDRESS;
 
 
@@ -44,13 +44,13 @@ public class SignInInteractor implements ISignInInteractor {
     }
 
     @Override
-    public Single<FirebaseUser> getUser() {
+    public Single<UserVm> getUser() {
         return iFirebaseAuthRepository.getUser();
     }
 
     @Override
     public Single<Boolean> signIn(String email, String password) {
-        return iFirebaseAuthRepository.createUser(email, password);
+        return iFirebaseAuthRepository.signIn(email, password);
     }
 
     //-------------------------------------------end implements ISignInInteractor-------------------

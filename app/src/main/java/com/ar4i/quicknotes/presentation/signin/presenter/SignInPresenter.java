@@ -1,14 +1,13 @@
 package com.ar4i.quicknotes.presentation.signin.presenter;
 
 import com.ar4i.quicknotes.R;
-import com.ar4i.quicknotes.domain.resource.IResourceInteractor;
+import com.ar4i.quicknotes.domain.resources.IResourceInteractor;
 import com.ar4i.quicknotes.domain.signin.ISignInInteractor;
 import com.ar4i.quicknotes.presentation.base.presenter.BasePresenter;
-import com.ar4i.quicknotes.presentation.signin.view.ISignInView;
+import com.ar4i.quicknotes.presentation.signin.views.ISignInView;
 
 import javax.inject.Inject;
 
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -72,14 +71,10 @@ public class SignInPresenter extends BasePresenter<ISignInView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(user -> {
-                    if (user != null) {
-
-                    } else {
-
+                    if (user != null && user.getUid() != null && !user.getUid().isEmpty()) {
+                        getView().navigateToApp();
                     }
-                }, error -> {
-                    getView().showMessage(error.getMessage());
-                }));
+                }, error -> getView().showMessage(error.getMessage())));
     }
 
     private void trySignIn(String email, String password) {
@@ -88,34 +83,47 @@ public class SignInPresenter extends BasePresenter<ISignInView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(success -> {
                     if (success) {
-
+                        getView().navigateToApp();
                     } else {
-
+                        tryCreateUser(email, password);
                     }
-                }, error -> {
-                    getView().showMessage(error.getMessage());
-                }));
+                }, error -> getView().showMessage(error.getMessage())));
     }
 
 
+    private void tryCreateUser(String email, String password) {
+        track(iSignInInteractor.createUser(email, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(success -> {
+                    if (success) {
+                        getView().navigateToApp();
+                    }
+                }, error -> getView().showMessage(error.getMessage())));
+    }
+
     private void showEmailError(boolean show) {
         if (show) {
-            getView().setEmailError(iResourceInteractor.getStringById(R.string.sign_in_activity_text_input_layout_text_invalid_email));
+            getView().setEmailError(getStringById(R.string.sign_in_activity_text_input_layout_text_invalid_email));
         } else {
-            getView().setEmailError(iResourceInteractor.getStringById(R.string.common_empty));
+            getView().setEmailError(getStringById(R.string.common_empty));
         }
     }
 
     private void showPasswordError(boolean show) {
         if (show) {
-            getView().setPasswordError(iResourceInteractor.getStringById(R.string.sign_in_activity_text_input_layout_text_invalid_password));
+            getView().setPasswordError(getStringById(R.string.sign_in_activity_text_input_layout_text_invalid_password));
         } else {
-            getView().setPasswordError(iResourceInteractor.getStringById(R.string.common_empty));
+            getView().setPasswordError(getStringById(R.string.common_empty));
         }
     }
 
     private void enableEnterButton() {
         getView().enableEnterButton(isEmailValid && isPasswordValid);
+    }
+
+    private String getStringById(int id) {
+        return iResourceInteractor.getStringById(id);
     }
 
     //-------------------------------------------end Private methods--------------------------------

@@ -6,10 +6,10 @@
     <string name="sign_in_activity.text.create_account_of_login">Before using the system
         need to create an account. If you have already done this, log in.</string>
     <string name="sign_in_activity.edittext.hint.email">Email</string>
-    <string name="sign_in_activity.edittext.hint.password">Password</string>
+    <string name="sign_in_activity.edittext.hint.password">Password(min.6 characters)</string>
     <string name="sign_in_activity.button.text.enter">enter</string>
     <string name="sign_in_activity.text_input_layout.text.invalid_email">invalid email</string>
-    <string name="sign_in_activity.text_input_layout.text.invalid_password">minimum 4 characters</string>
+    <string name="sign_in_activity.text_input_layout.text.invalid_password">minimum 6 characters</string>
 
     <string name="tab_layout.text.new_note">NEW NOTE</string>
     <string name="tab_layout.text.new_drawing">NEW DRAWING</string>

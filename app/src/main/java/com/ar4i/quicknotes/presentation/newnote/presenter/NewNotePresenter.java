@@ -48,8 +48,9 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
 
     // region========================================Public methods=================================
 
-    public void saveLastNote(){
-        saveNote(new NoteVm(getView().getTitle(), getView().getBody()));
+    public void saveLastNote() {
+        if (!getView().getTitle().isEmpty() || !getView().getBody().isEmpty())
+            saveNote(new NoteVm(getView().getTitle(), getView().getBody()));
     }
 
     // endregion-------------------------------------Public methods---------------------------------

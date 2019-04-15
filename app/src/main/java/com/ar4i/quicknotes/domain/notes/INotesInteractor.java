@@ -12,4 +12,6 @@ public interface INotesInteractor {
     Single<NoteVm> getLastSavedNote();
 
     Completable deleteLastNote();
+
+    Completable sendNote(NoteVm noteVm);
 }

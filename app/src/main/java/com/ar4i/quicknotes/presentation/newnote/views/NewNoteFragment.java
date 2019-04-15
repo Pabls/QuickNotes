@@ -113,11 +113,15 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
     @Override
     public void setTitle(String title) {
         etTitle.setText(title);
+        if(!title.isEmpty())
+            etTitle.setSelection(etTitle.getText().length());
     }
 
     @Override
     public void setBody(String body) {
         etBody.setText(body);
+        if(!body.isEmpty())
+            etBody.setSelection(etBody.getText().length());
     }
 
     // endregion-------------------------------------implements INewNoteView------------------------

@@ -1,13 +1,16 @@
 package com.ar4i.quicknotes.data.models;
 
+import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class NoteVm {
-    private static final String PATTERN = "MM/dd/yyyy HH:mm:ss";
+    private static final String PATTERN = "dd.MM.yyyy HH:mm:ss";
     private String creationDate;
     private long timestamp;
     private String title;
     private String body;
+    private String userId;
 
     public NoteVm() {
     }
@@ -17,10 +20,11 @@ public class NoteVm {
         this.body = body;
     }
 
-    public NoteVm(long timestamp, String title, String body) {
+    public NoteVm(long timestamp, String title, String body, String userId) {
         this(title, body);
         this.timestamp = timestamp;
         this.creationDate = covert(timestamp);
+        this.userId = userId;
     }
 
     // region========================================GET/SET============================================
@@ -41,12 +45,18 @@ public class NoteVm {
         return body;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
     // endregion-------------------------------------GET/SET--------------------------------------------
 
     // region========================================Private methods================================
 
     private String covert(long currenttimestamp) {
-        return new SimpleDateFormat(PATTERN).format(new java.util.Date(currenttimestamp * 1000));
+        Date date = new Date(currenttimestamp);
+        Format format = new SimpleDateFormat(PATTERN);
+        return format.format(date);
     }
 
     // endregion-------------------------------------Private methods--------------------------------

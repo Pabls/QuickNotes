@@ -31,7 +31,7 @@ public class DatabaseRepository implements IDatabaseRepository {
             NoteEntity entity = new NoteEntity();
             entity.title = note.getTitle();
             entity.body = note.getBody();
-            notesDatabase.getNoteDao().update(entity);
+            notesDatabase.getNoteDao().insertNote(entity);
             emitter.onComplete();
         });
     }
@@ -48,14 +48,10 @@ public class DatabaseRepository implements IDatabaseRepository {
     public Single<NoteVm> getLastNote() {
         return Single.create(emitter -> {
             NoteVm noteVm;
-            try {
-                NoteEntity note = notesDatabase.getNoteDao().getLastNote();
-                if (note != null) {
-                    noteVm = new NoteVm(note.title, note.body);
-                } else {
-                    noteVm = new NoteVm();
-                }
-            } catch (Exception e) {
+            NoteEntity note = notesDatabase.getNoteDao().getLastNote();
+            if (note != null) {
+                noteVm = new NoteVm(note.title, note.body);
+            } else {
                 noteVm = new NoteVm();
             }
             emitter.onSuccess(noteVm);

@@ -1,9 +1,9 @@
 package com.ar4i.quicknotes.data.repositories.firebaserealtime;
 
-import com.ar4i.quicknotes.data.entities.Note;
+import com.ar4i.quicknotes.data.models.NoteVm;
 
-import io.reactivex.Single;
+import io.reactivex.Completable;
 
 public interface IFirebaseRealtimeRepository {
-    Single<Boolean> sendNote(Note note);
+    Completable sendNote(NoteVm noteVm);
 }

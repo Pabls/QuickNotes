@@ -8,6 +8,8 @@ import io.reactivex.Single;
 
 public class FirebaseAuthRepository implements IFirebaseAuthRepository {
 
+    //==========================================start implements IFirebaseAuthRepository============
+
     @Override
     public Single<Boolean> createUser(String email, String password) {
         return Single.create(emitter ->
@@ -47,4 +49,6 @@ public class FirebaseAuthRepository implements IFirebaseAuthRepository {
             emitter.onSuccess(userVm);
         });
     }
+
+    //-------------------------------------------end implements IFirebaseAuthRepository-------------
 }

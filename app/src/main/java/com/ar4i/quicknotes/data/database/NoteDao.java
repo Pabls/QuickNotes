@@ -1,8 +1,8 @@
 package com.ar4i.quicknotes.data.database;
 
 import androidx.room.Dao;
+import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
 
 @Dao
 public interface NoteDao {
@@ -12,6 +12,6 @@ public interface NoteDao {
     @Query("DELETE FROM notes")
     void deleteNote();
 
-    @Update
-    void update(NoteEntity noteEntity);
+    @Insert
+    void insertNote(NoteEntity noteEntity);
 }

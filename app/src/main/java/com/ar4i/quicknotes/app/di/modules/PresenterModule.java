@@ -2,6 +2,7 @@ package com.ar4i.quicknotes.app.di.modules;
 
 import com.ar4i.quicknotes.data.repositories.database.DatabaseRepository;
 import com.ar4i.quicknotes.data.repositories.firebaseauth.FirebaseAuthRepository;
+import com.ar4i.quicknotes.data.repositories.firebaserealtime.FirebaseRealtimeRepository;
 import com.ar4i.quicknotes.data.repositories.resources.ResourceRepository;
 import com.ar4i.quicknotes.domain.notes.NotesInteractor;
 import com.ar4i.quicknotes.domain.resources.ResourceInteractor;
@@ -23,7 +24,8 @@ public class PresenterModule {
     }
 
     @Provides
-    NotesInteractor provideNotesInteractor(DatabaseRepository databaseRepository){
-        return new NotesInteractor(databaseRepository);
+    NotesInteractor provideNotesInteractor(DatabaseRepository databaseRepository,
+                                           FirebaseRealtimeRepository firebaseRealtimeRepository) {
+        return new NotesInteractor(databaseRepository, firebaseRealtimeRepository);
     }
 }

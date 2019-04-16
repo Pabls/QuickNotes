@@ -6,7 +6,10 @@ import com.ar4i.quicknotes.data.repositories.firebaserealtime.IFirebaseRealtimeR
 
 import org.reactivestreams.Subscription;
 
+import java.util.List;
+
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public class NotesInteractor implements INotesInteractor {
@@ -45,6 +48,11 @@ public class NotesInteractor implements INotesInteractor {
     @Override
     public Completable sendNote(NoteVm noteVm) {
         return iFirebaseRealtimeRepository.sendNote(noteVm);
+    }
+
+    @Override
+    public Observable<List<NoteVm>> getNotes(String userId) {
+        return iFirebaseRealtimeRepository.getNotes(userId);
     }
 
     // endregion-------------------------------------implements INotesInteractor--------------------

@@ -11,7 +11,7 @@ import com.ar4i.quicknotes.presentation.newnote.views.NewNoteFragment;
 import com.ar4i.quicknotes.presentation.note.notedetails.views.NoteDetailsFragment;
 import com.ar4i.quicknotes.presentation.note.noteediting.views.NoteEditingFragment;
 import com.ar4i.quicknotes.presentation.notes.views.NotesFragment;
-import com.ar4i.quicknotes.presentation.signin.views.SignInActivity;
+import com.ar4i.quicknotes.presentation.signin.views.SignInFragment;
 
 import javax.inject.Singleton;
 
@@ -31,7 +31,7 @@ public interface ApplicationComponent {
 
     NotesDatabase database();
 
-    void inject(SignInActivity signInActivity);
+    void inject(SignInFragment signInFragment);
 
     void inject(NotesFragment notesFragment);
 

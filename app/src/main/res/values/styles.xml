@@ -11,4 +11,11 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="AppTheme.Message" parent="AppTheme">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/green</item>
+        <item name="android:textSize">@dimen/message_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

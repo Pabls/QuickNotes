@@ -70,6 +70,8 @@ public class SignInPresenter extends BasePresenter<ISignInView> {
         track(iSignInInteractor.getUser()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(_void -> getView().showLoad())
+                .doOnEvent((res, error) -> getView().hideLoad())
                 .subscribe(user -> {
                     if (user != null && user.getUid() != null && !user.getUid().isEmpty()) {
                         getView().navigateToApp();
@@ -81,6 +83,8 @@ public class SignInPresenter extends BasePresenter<ISignInView> {
         track(iSignInInteractor.signIn(email, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(_void -> getView().showLoad())
+                .doOnEvent((res, error) -> getView().hideLoad())
                 .subscribe(success -> {
                     if (success) {
                         getView().navigateToApp();
@@ -95,6 +99,8 @@ public class SignInPresenter extends BasePresenter<ISignInView> {
         track(iSignInInteractor.createUser(email, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(_void -> getView().showLoad())
+                .doOnEvent((res, error) -> getView().hideLoad())
                 .subscribe(success -> {
                     if (success) {
                         getView().navigateToApp();

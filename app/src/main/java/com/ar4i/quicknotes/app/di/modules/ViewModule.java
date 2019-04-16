@@ -16,7 +16,8 @@ import dagger.Provides;
 public class ViewModule {
 
     @Provides
-    SignInPresenter provideSignInPresenter(SignInInteractor signInInteractor, ResourceInteractor resourceInteractor) {
+    SignInPresenter provideSignInPresenter(SignInInteractor signInInteractor,
+                                           ResourceInteractor resourceInteractor) {
         return new SignInPresenter(signInInteractor, resourceInteractor);
     }
 
@@ -26,8 +27,10 @@ public class ViewModule {
     }
 
     @Provides
-    NewNotePresenter provideNewNotePresenter(NotesInteractor notesInteractor, SignInInteractor signInInteractor) {
-        return new NewNotePresenter(notesInteractor, signInInteractor);
+    NewNotePresenter provideNewNotePresenter(NotesInteractor notesInteractor,
+                                             SignInInteractor signInInteractor,
+                                             ResourceInteractor resourceInteractor) {
+        return new NewNotePresenter(notesInteractor, signInInteractor,resourceInteractor);
     }
 
     @Provides

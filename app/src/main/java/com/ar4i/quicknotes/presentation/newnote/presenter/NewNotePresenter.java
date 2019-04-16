@@ -1,8 +1,10 @@
 package com.ar4i.quicknotes.presentation.newnote.presenter;
 
+import com.ar4i.quicknotes.R;
 import com.ar4i.quicknotes.data.models.NoteVm;
 import com.ar4i.quicknotes.data.models.UserVm;
 import com.ar4i.quicknotes.domain.notes.INotesInteractor;
+import com.ar4i.quicknotes.domain.resources.IResourceInteractor;
 import com.ar4i.quicknotes.domain.signin.ISignInInteractor;
 import com.ar4i.quicknotes.presentation.base.presenter.BasePresenter;
 import com.ar4i.quicknotes.presentation.newnote.views.INewNoteView;
@@ -14,14 +16,18 @@ import io.reactivex.schedulers.Schedulers;
 
 public class NewNotePresenter extends BasePresenter<INewNoteView> {
 
-    public NewNotePresenter(INotesInteractor iNotesInteractor, ISignInInteractor iSignInInteractor) {
+    public NewNotePresenter(INotesInteractor iNotesInteractor,
+                            ISignInInteractor iSignInInteractor,
+                            IResourceInteractor iResourceInteractor) {
         this.iNotesInteractor = iNotesInteractor;
         this.iSignInInteractor = iSignInInteractor;
+        this.iResourceInteractor = iResourceInteractor;
     }
     // region========================================Fields=========================================
 
     INotesInteractor iNotesInteractor;
     ISignInInteractor iSignInInteractor;
+    IResourceInteractor iResourceInteractor;
     private String title;
     private String body;
     private UserVm userVm;
@@ -75,6 +81,8 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
         track(iSignInInteractor.getUser()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(_void -> getView().showLoad())
+                .doOnEvent((res, error) -> getView().hideLoad())
                 .subscribe(user -> {
                     this.userVm = user;
                 }, error -> getView().showMessage(error.getMessage())));
@@ -84,16 +92,27 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
         track(iNotesInteractor.sendNote(noteVm)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(_void -> getView().showLoad())
+                .doOnTerminate(() -> getView().hideLoad())
                 .subscribe(() -> {
-                    getView().setTitle("");
-                    getView().setBody("");
+                    clearinput();
+                    deleteLastNote();
+                    getView().notifyOfSuccess();
                 }));
+    }
+
+    private void clearinput() {
+        String emptyString = iResourceInteractor.getStringById(R.string.common_empty);
+        getView().setTitle(emptyString);
+        getView().setBody(emptyString);
     }
 
     private void saveNote(NoteVm noteVm) {
         track(iNotesInteractor.saveNote(noteVm)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(_void -> getView().showLoad())
+                .doOnTerminate(() -> getView().hideLoad())
                 .subscribe());
     }
 
@@ -101,6 +120,8 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
         track(iNotesInteractor.getLastSavedNote()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(_void -> getView().showLoad())
+                .doOnEvent((res, error) -> getView().hideLoad())
                 .subscribe(noteVm -> {
                     if (noteVm != null && noteVm.getTitle() != null && !noteVm.getTitle().isEmpty()) {
                         getView().setTitle(noteVm.getTitle());
@@ -114,6 +135,8 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
         track(iNotesInteractor.deleteLastNote()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(_void -> getView().showLoad())
+                .doOnTerminate(() -> getView().hideLoad())
                 .subscribe());
     }
 

@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.ar4i.quicknotes.R;
 import com.ar4i.quicknotes.app.App;
 import com.ar4i.quicknotes.app.di.components.ApplicationComponent;
 import com.ar4i.quicknotes.presentation.base.presenter.IPresenter;
@@ -15,6 +17,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public abstract class BaseFragment extends Fragment implements IMvpView {
+
+    // region========================================Fields=========================================
+
+    FrameLayout rootLayout;
+
+    // endregion-------------------------------------Fields-----------------------------------------
 
     //==========================================start Lifecycle=====================================
 
@@ -34,6 +42,8 @@ public abstract class BaseFragment extends Fragment implements IMvpView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        rootLayout = getActivity().findViewById(android.R.id.content);
+
         if(getPresenter() != null)
             getPresenter().attachView(this);
     }
@@ -51,6 +61,17 @@ public abstract class BaseFragment extends Fragment implements IMvpView {
     @Override
     public void showMessage(String message) {
         Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showLoad() {
+        View.inflate(getActivity(), R.layout.view_progress_bar, rootLayout);
+    }
+
+    @Override
+    public void hideLoad() {
+        if (rootLayout != null)
+            rootLayout.removeViewAt(rootLayout.getChildCount() - 1);
     }
 
     //-------------------------------------------end -----------------------------------------------

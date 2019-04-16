@@ -21,4 +21,6 @@ public interface INewNoteView extends IMvpView {
     void setTitle(String title);
 
     void setBody(String body);
+
+    void notifyOfSuccess();
 }

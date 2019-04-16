@@ -18,6 +18,7 @@
 
     <string name="new_note_fragment.edittext.hint.title">Заголовок заметки</string>
     <string name="new_note_fragment.edittext.hint.body">Ваша заметка</string>
+    <string name="new_note_fragment.message.text.successfully_saved">Заметка успешно сохранена</string>
 
     <string name="notes_fragment.text.no_notes">У все еще нет созданных заметок</string>
 

@@ -1,7 +1,11 @@
 package com.ar4i.quicknotes.presentation.newnote.views;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.ar4i.quicknotes.R;
@@ -17,6 +21,7 @@ import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import io.reactivex.Observable;
 
 public class NewNoteFragment extends BaseFragment implements INewNoteView {
@@ -39,6 +44,7 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
     EditText etTitle;
     EditText etBody;
     FloatingActionButton fabSendNote;
+    ConstraintLayout clContainer;
 
     // endregion-------------------------------------UI---------------------------------------------
 
@@ -124,9 +130,46 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
             etBody.setSelection(etBody.getText().length());
     }
 
+    @Override
+    public void notifyOfSuccess() {
+        hideKeyboard();
+        showSuccessfulView();
+    }
+
     // endregion-------------------------------------implements INewNoteView------------------------
 
     // region========================================Private methods================================
+
+    private void showSuccessfulView() {
+        View.inflate(getActivity(), R.layout.view_done, clContainer);
+        clContainer.setAlpha(0.0f);
+        clContainer.animate()
+                .setDuration(2000)
+                .alpha(1.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        removeSuccessView();
+                    }
+                });
+    }
+
+    private void hideKeyboard() {
+        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+    }
+
+    private void showKeyboard() {
+        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+
+    private void removeSuccessView() {
+        clContainer.removeViewAt(clContainer.getChildCount() - 1);
+        etTitle.requestFocus();
+        showKeyboard();
+    }
 
     private void initView() {
         tilTitle = getActivity().findViewById(R.id.til_title);
@@ -134,6 +177,7 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
         etTitle = getActivity().findViewById(R.id.et_title);
         etBody = getActivity().findViewById(R.id.et_body);
         fabSendNote = getActivity().findViewById(R.id.fab_send);
+        clContainer = getActivity().findViewById(R.id.cl_container);
     }
 
     // endregion-------------------------------------Private methods--------------------------------

@@ -8,6 +8,7 @@ import com.ar4i.quicknotes.data.models.NoteVm;
 import com.ar4i.quicknotes.presentation.base.BaseViewHolder;
 
 import androidx.annotation.NonNull;
+import io.reactivex.subjects.PublishSubject;
 
 public class NotesViewHolder extends BaseViewHolder<NoteVm> {
 
@@ -19,8 +20,8 @@ public class NotesViewHolder extends BaseViewHolder<NoteVm> {
 
     // endregion-------------------------------------Fields--------------------------------------------
 
-    public NotesViewHolder(@NonNull View itemView) {
-        super(itemView);
+    public NotesViewHolder(@NonNull View itemView, PublishSubject<Integer> itemViewClickSubject) {
+        super(itemView, itemViewClickSubject);
 
         tvTitle = itemView.findViewById(R.id.tv_title);
         tvCreationDate = itemView.findViewById(R.id.tv_creation_date);

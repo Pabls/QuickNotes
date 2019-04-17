@@ -2,6 +2,7 @@ package com.ar4i.quicknotes.data.database.dto;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "notes")
@@ -13,6 +14,7 @@ public class NoteDto {
 
     public NoteDto(){}
 
+    @Ignore
     public NoteDto(@NonNull String title, String body) {
         this.title = title;
         this.body = body;

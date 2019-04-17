@@ -2,16 +2,24 @@ package com.ar4i.quicknotes.presentation.notes.views;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.ar4i.quicknotes.R;
+import com.ar4i.quicknotes.data.models.NoteVm;
 import com.ar4i.quicknotes.presentation.base.presenter.IPresenter;
 import com.ar4i.quicknotes.presentation.base.views.BaseFragment;
+import com.ar4i.quicknotes.presentation.notes.NotesAdapter;
 import com.ar4i.quicknotes.presentation.notes.presenter.NotesPresenter;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import io.reactivex.Observable;
 
 public class NotesFragment extends BaseFragment implements INotesView {
 
@@ -23,15 +31,24 @@ public class NotesFragment extends BaseFragment implements INotesView {
 
     @Inject
     NotesPresenter notesPresenter;
+    NotesAdapter notesAdapter;
 
     // endregion-------------------------------------Fields-----------------------------------------
+
+
+    //==========================================start UI============================================
+
+    TextView tvNoNotes;
+    RecyclerView rvNotes;
+
+    //-------------------------------------------end UI---------------------------------------------
 
 
     // ==========================================start Lifecycle====================================
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        //initView();
+        initView();
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -58,7 +75,39 @@ public class NotesFragment extends BaseFragment implements INotesView {
     // endregion-------------------------------------extends BaseFragment---------------------------
 
 
+    //==========================================start implements INotesView=========================
+
+    @Override
+    public Observable<Integer> onListItemClick() {
+        return notesAdapter.itemClickEvent();
+    }
+
+
+    @Override
+    public void setNotes(List<NoteVm> notes) {
+        notesAdapter.addAllAndNotify(notes);
+    }
+
+    @Override
+    public void showNoNotesMessage(boolean show) {
+        tvNoNotes.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
+    //-------------------------------------------end implements INotesView--------------------------
+
+
     // region========================================Private Methods================================
+
+    private void initView() {
+        notesAdapter = new NotesAdapter();
+        tvNoNotes = getActivity().findViewById(R.id.tv_no_notes);
+        rvNotes = getActivity().findViewById(R.id.rv_notes);
+
+        rvNotes.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        rvNotes.setAdapter(notesAdapter);
+    }
+
+
     // endregion-------------------------------------Private Methods--------------------------------
 
 }

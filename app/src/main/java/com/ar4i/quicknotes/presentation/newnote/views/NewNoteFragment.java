@@ -160,15 +160,8 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
         imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
     }
 
-    private void showKeyboard() {
-        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-    }
-
     private void removeSuccessView() {
         clContainer.removeViewAt(clContainer.getChildCount() - 1);
-        etTitle.requestFocus();
-        showKeyboard();
     }
 
     private void initView() {

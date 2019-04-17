@@ -2,7 +2,7 @@ package com.ar4i.quicknotes.presentation.signin.presenter;
 
 import com.ar4i.quicknotes.R;
 import com.ar4i.quicknotes.domain.resources.IResourceInteractor;
-import com.ar4i.quicknotes.domain.signin.ISignInInteractor;
+import com.ar4i.quicknotes.domain.auth.IAuthInteractor;
 import com.ar4i.quicknotes.presentation.base.presenter.BasePresenter;
 import com.ar4i.quicknotes.presentation.signin.views.ISignInView;
 
@@ -14,14 +14,14 @@ import io.reactivex.schedulers.Schedulers;
 public class SignInPresenter extends BasePresenter<ISignInView> {
 
     @Inject
-    public SignInPresenter(ISignInInteractor iSignInInteractor, IResourceInteractor iResourceInteractor) {
-        this.iSignInInteractor = iSignInInteractor;
+    public SignInPresenter(IAuthInteractor iAuthInteractor, IResourceInteractor iResourceInteractor) {
+        this.iAuthInteractor = iAuthInteractor;
         this.iResourceInteractor = iResourceInteractor;
     }
 
     //==========================================start Fields========================================
 
-    private ISignInInteractor iSignInInteractor;
+    private IAuthInteractor iAuthInteractor;
     private IResourceInteractor iResourceInteractor;
     private boolean isEmailValid;
     private boolean isPasswordValid;
@@ -41,7 +41,7 @@ public class SignInPresenter extends BasePresenter<ISignInView> {
             if (email.isEmpty()) {
                 showEmailError(false);
             } else {
-                isEmailValid = iSignInInteractor.isEmailValid(email);
+                isEmailValid = iAuthInteractor.isEmailValid(email);
                 showEmailError(!isEmailValid);
             }
             enableEnterButton();
@@ -51,7 +51,7 @@ public class SignInPresenter extends BasePresenter<ISignInView> {
             if (password.isEmpty()) {
                 showPasswordError(false);
             } else {
-                isPasswordValid = iSignInInteractor.isPasswordValid(password);
+                isPasswordValid = iAuthInteractor.isPasswordValid(password);
                 showPasswordError(!isPasswordValid);
             }
             enableEnterButton();
@@ -67,7 +67,7 @@ public class SignInPresenter extends BasePresenter<ISignInView> {
     //==========================================start Private methods===============================
 
     private void getUser(){
-        track(iSignInInteractor.getUser()
+        track(iAuthInteractor.getUser()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(_void -> getView().showLoad())
@@ -80,7 +80,7 @@ public class SignInPresenter extends BasePresenter<ISignInView> {
     }
 
     private void trySignIn(String email, String password) {
-        track(iSignInInteractor.signIn(email, password)
+        track(iAuthInteractor.signIn(email, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(_void -> getView().showLoad())
@@ -91,12 +91,14 @@ public class SignInPresenter extends BasePresenter<ISignInView> {
                     } else {
                         tryCreateUser(email, password);
                     }
-                }, error -> getView().showMessage(error.getMessage())));
+                }, error -> {
+                    getView().showMessage(error.getMessage());
+                }));
     }
 
 
     private void tryCreateUser(String email, String password) {
-        track(iSignInInteractor.createUser(email, password)
+        track(iAuthInteractor.createUser(email, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(_void -> getView().showLoad())

@@ -3,9 +3,9 @@ package com.ar4i.quicknotes.presentation.newnote.presenter;
 import com.ar4i.quicknotes.R;
 import com.ar4i.quicknotes.data.models.NoteVm;
 import com.ar4i.quicknotes.data.models.UserVm;
+import com.ar4i.quicknotes.domain.auth.IAuthInteractor;
 import com.ar4i.quicknotes.domain.notes.INotesInteractor;
 import com.ar4i.quicknotes.domain.resources.IResourceInteractor;
-import com.ar4i.quicknotes.domain.signin.ISignInInteractor;
 import com.ar4i.quicknotes.presentation.base.presenter.BasePresenter;
 import com.ar4i.quicknotes.presentation.newnote.views.INewNoteView;
 
@@ -17,16 +17,16 @@ import io.reactivex.schedulers.Schedulers;
 public class NewNotePresenter extends BasePresenter<INewNoteView> {
 
     public NewNotePresenter(INotesInteractor iNotesInteractor,
-                            ISignInInteractor iSignInInteractor,
+                            IAuthInteractor iAuthInteractor,
                             IResourceInteractor iResourceInteractor) {
         this.iNotesInteractor = iNotesInteractor;
-        this.iSignInInteractor = iSignInInteractor;
+        this.iAuthInteractor = iAuthInteractor;
         this.iResourceInteractor = iResourceInteractor;
     }
     // region========================================Fields=========================================
 
     INotesInteractor iNotesInteractor;
-    ISignInInteractor iSignInInteractor;
+    IAuthInteractor iAuthInteractor;
     IResourceInteractor iResourceInteractor;
     private String title;
     private String body;
@@ -78,7 +78,7 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
     // region========================================Private methods================================
 
     private void getUser() {
-        track(iSignInInteractor.getUser()
+        track(iAuthInteractor.getUser()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(_void -> getView().showLoad())

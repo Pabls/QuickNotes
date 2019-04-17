@@ -1,8 +1,8 @@
 package com.ar4i.quicknotes.app.di.modules;
 
+import com.ar4i.quicknotes.domain.auth.AuthInteractor;
 import com.ar4i.quicknotes.domain.notes.NotesInteractor;
 import com.ar4i.quicknotes.domain.resources.ResourceInteractor;
-import com.ar4i.quicknotes.domain.signin.SignInInteractor;
 import com.ar4i.quicknotes.presentation.newnote.presenter.NewNotePresenter;
 import com.ar4i.quicknotes.presentation.note.notedetails.presenter.NoteDetailsPresenter;
 import com.ar4i.quicknotes.presentation.note.noteediting.presenter.NoteEditingPresenter;
@@ -16,21 +16,21 @@ import dagger.Provides;
 public class ViewModule {
 
     @Provides
-    SignInPresenter provideSignInPresenter(SignInInteractor signInInteractor,
+    SignInPresenter provideSignInPresenter(AuthInteractor authInteractor,
                                            ResourceInteractor resourceInteractor) {
-        return new SignInPresenter(signInInteractor, resourceInteractor);
+        return new SignInPresenter(authInteractor, resourceInteractor);
     }
 
     @Provides
-    NotesPresenter provideNotesPresenter(NotesInteractor notesInteractor) {
-        return new NotesPresenter(notesInteractor);
+    NotesPresenter provideNotesPresenter(NotesInteractor notesInteractor, AuthInteractor authInteractor) {
+        return new NotesPresenter(notesInteractor, authInteractor);
     }
 
     @Provides
     NewNotePresenter provideNewNotePresenter(NotesInteractor notesInteractor,
-                                             SignInInteractor signInInteractor,
+                                             AuthInteractor authInteractor,
                                              ResourceInteractor resourceInteractor) {
-        return new NewNotePresenter(notesInteractor, signInInteractor,resourceInteractor);
+        return new NewNotePresenter(notesInteractor, authInteractor,resourceInteractor);
     }
 
     @Provides

@@ -60,7 +60,7 @@ public abstract class BaseFragment extends Fragment implements IMvpView {
 
     @Override
     public void showMessage(String message) {
-        Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override

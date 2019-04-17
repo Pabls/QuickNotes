@@ -1,8 +1,9 @@
 package com.ar4i.quicknotes.data.repositories.database;
 
-import com.ar4i.quicknotes.data.database.NoteEntity;
 import com.ar4i.quicknotes.data.database.NotesDatabase;
+import com.ar4i.quicknotes.data.database.dto.NoteDto;
 import com.ar4i.quicknotes.data.models.NoteVm;
+import com.ar4i.quicknotes.data.models.UserVm;
 
 import javax.inject.Inject;
 
@@ -28,10 +29,7 @@ public class DatabaseRepository implements IDatabaseRepository {
     @Override
     public Completable setNote(NoteVm note) {
         return Completable.create(emitter -> {
-            NoteEntity entity = new NoteEntity();
-            entity.title = note.getTitle();
-            entity.body = note.getBody();
-            notesDatabase.getNoteDao().insertNote(entity);
+            notesDatabase.getNoteDao().insertNote(new NoteDto(note.getTitle(), note.getBody()));
             emitter.onComplete();
         });
     }
@@ -47,13 +45,16 @@ public class DatabaseRepository implements IDatabaseRepository {
     @Override
     public Single<NoteVm> getLastNote() {
         return Single.create(emitter -> {
+
             NoteVm noteVm;
-            NoteEntity note = notesDatabase.getNoteDao().getLastNote();
+            NoteDto note = notesDatabase.getNoteDao().getLastNote();
+
             if (note != null) {
-                noteVm = new NoteVm(note.title, note.body);
+                noteVm = new NoteVm(note.getTitle(), note.getBody());
             } else {
                 noteVm = new NoteVm();
             }
+
             emitter.onSuccess(noteVm);
         });
     }

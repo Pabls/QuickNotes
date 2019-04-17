@@ -8,9 +8,12 @@ import java.util.List;
 import io.reactivex.Observable;
 
 public interface INotesView extends IMvpView {
+
     Observable<Integer> onListItemClick();
 
     void setNotes(List<NoteVm> notes);
 
     void showNoNotesMessage(boolean show);
+
+    void navigateToNoteActivity();
 }

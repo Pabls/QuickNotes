@@ -162,6 +162,7 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
 
     private void removeSuccessView() {
         clContainer.removeViewAt(clContainer.getChildCount() - 1);
+        etTitle.requestFocus();
     }
 
     private void initView() {

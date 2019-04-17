@@ -1,6 +1,7 @@
 package com.ar4i.quicknotes.app;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.ar4i.quicknotes.app.di.components.ApplicationComponent;
 import com.ar4i.quicknotes.app.di.components.DaggerApplicationComponent;
@@ -11,6 +12,7 @@ public class App extends Application {
     //==========================================start Fields========================================
 
     private static ApplicationComponent applicationComponent;
+    private static App context;
 
     //-------------------------------------------end Fields-----------------------------------------
 
@@ -20,8 +22,8 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        context = this;
         initApplicationComponent();
-        //FirebaseApp.initializeApp(this);
     }
 
     //-------------------------------------------end Lifecycle--------------------------------------
@@ -29,8 +31,12 @@ public class App extends Application {
 
     //==========================================start Public methods================================
 
-    public static ApplicationComponent getApplicationComponent(){
+    public static ApplicationComponent getApplicationComponent() {
         return applicationComponent;
+    }
+
+    public static Context getContext(){
+        return context;
     }
 
     //-------------------------------------------end Public methods---------------------------------

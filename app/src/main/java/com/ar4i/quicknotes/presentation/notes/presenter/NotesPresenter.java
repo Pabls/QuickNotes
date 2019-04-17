@@ -34,10 +34,9 @@ public class NotesPresenter extends BasePresenter<INotesView> {
         super.attachView(view);
         getUser();
         track(getView().onListItemClick()
-                .subscribe(index -> {
-                    getView().showMessage(String.valueOf(index));
-                }));
+                .subscribe(index -> getView().navigateToNoteActivity()));
     }
+
 
     //-------------------------------------------end extends BasePresenter<INotesView>--------------
 

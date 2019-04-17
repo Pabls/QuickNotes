@@ -1,4 +1,4 @@
-package com.ar4i.quicknotes.presentation.notes;
+package com.ar4i.quicknotes.presentation.notes.views;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import com.ar4i.quicknotes.R;
 import com.ar4i.quicknotes.data.models.NoteVm;
-import com.ar4i.quicknotes.presentation.base.BaseAdapter;
+import com.ar4i.quicknotes.presentation.base.views.BaseAdapter;
 
 import androidx.annotation.NonNull;
 

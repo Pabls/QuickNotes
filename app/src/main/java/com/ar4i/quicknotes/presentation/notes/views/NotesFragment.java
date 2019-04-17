@@ -1,5 +1,6 @@
 package com.ar4i.quicknotes.presentation.notes.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -8,7 +9,7 @@ import com.ar4i.quicknotes.R;
 import com.ar4i.quicknotes.data.models.NoteVm;
 import com.ar4i.quicknotes.presentation.base.presenter.IPresenter;
 import com.ar4i.quicknotes.presentation.base.views.BaseFragment;
-import com.ar4i.quicknotes.presentation.notes.NotesAdapter;
+import com.ar4i.quicknotes.presentation.note.root.NoteActivity;
 import com.ar4i.quicknotes.presentation.notes.presenter.NotesPresenter;
 
 import java.util.List;
@@ -91,6 +92,11 @@ public class NotesFragment extends BaseFragment implements INotesView {
     @Override
     public void showNoNotesMessage(boolean show) {
         tvNoNotes.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void navigateToNoteActivity() {
+        getActivity().startActivity(new Intent(getActivity(), NoteActivity.class));
     }
 
     //-------------------------------------------end implements INotesView--------------------------

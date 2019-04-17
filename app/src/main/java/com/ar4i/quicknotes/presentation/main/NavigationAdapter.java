@@ -1,8 +1,8 @@
 package com.ar4i.quicknotes.presentation.main;
 
-import android.content.Context;
 
 import com.ar4i.quicknotes.R;
+import com.ar4i.quicknotes.app.App;
 import com.ar4i.quicknotes.presentation.newnote.views.NewNoteFragment;
 import com.ar4i.quicknotes.presentation.notes.views.NotesFragment;
 
@@ -13,15 +13,13 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 public class NavigationAdapter extends FragmentPagerAdapter {
 
-    public NavigationAdapter(FragmentManager fm, Context context) {
+    public NavigationAdapter(FragmentManager fm) {
         super(fm);
-        this.context = context;
     }
 
     //==========================================start Fields========================================
 
-    private static final int SCREENS_COUNT = 2;
-    private Context context;
+    private static final int PAGES_COUNT = 2;
 
     //-------------------------------------------end Fields-----------------------------------------
 
@@ -32,9 +30,9 @@ public class NavigationAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return NotesFragment.newInstance();
-            case 1:
                 return NewNoteFragment.newInstance();
+            case 1:
+                return NotesFragment.newInstance();
 //            case 2:
 //                return NewDrawFragment.newInstance();
             default:
@@ -44,7 +42,7 @@ public class NavigationAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return SCREENS_COUNT;
+        return PAGES_COUNT;
     }
 
     @Nullable
@@ -52,9 +50,9 @@ public class NavigationAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return getString(R.string.tab_layout_text_my_notes);
-            case 1:
                 return getString(R.string.tab_layout_text_new_note);
+            case 1:
+                return getString(R.string.tab_layout_text_my_notes);
 //            case 2:
 //                return getString(R.string.tab_layout_text_new_drawing);
             default:
@@ -69,7 +67,7 @@ public class NavigationAdapter extends FragmentPagerAdapter {
 
 
     private String getString(int resId) {
-        return context.getString(resId);
+        return App.getContext().getString(resId);
     }
 
     //-------------------------------------------end Private Methods--------------------------------

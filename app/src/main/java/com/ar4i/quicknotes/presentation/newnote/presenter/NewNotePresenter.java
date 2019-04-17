@@ -135,8 +135,6 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
         track(iNotesInteractor.deleteLastNote()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(_void -> getView().showLoad())
-                .doOnTerminate(() -> getView().hideLoad())
                 .subscribe());
     }
 

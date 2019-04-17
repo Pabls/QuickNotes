@@ -41,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
         initViews();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        adapter = null;
+    }
+
     //-------------------------------------------end Lifecycle--------------------------------------
 
     //==========================================start Private methods===============================
@@ -48,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         tbMenu = findViewById(R.id.tl_menu);
         vpSlider = findViewById(R.id.vp_slider);
-        adapter = new NavigationAdapter(getSupportFragmentManager(), this);
+        adapter = new NavigationAdapter(getSupportFragmentManager());
         vpSlider.setAdapter(adapter);
         tbMenu.setupWithViewPager(vpSlider);
 

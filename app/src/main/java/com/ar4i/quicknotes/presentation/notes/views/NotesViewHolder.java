@@ -1,11 +1,11 @@
-package com.ar4i.quicknotes.presentation.notes;
+package com.ar4i.quicknotes.presentation.notes.views;
 
 import android.view.View;
 import android.widget.TextView;
 
 import com.ar4i.quicknotes.R;
 import com.ar4i.quicknotes.data.models.NoteVm;
-import com.ar4i.quicknotes.presentation.base.BaseViewHolder;
+import com.ar4i.quicknotes.presentation.base.views.BaseViewHolder;
 
 import androidx.annotation.NonNull;
 import io.reactivex.subjects.PublishSubject;

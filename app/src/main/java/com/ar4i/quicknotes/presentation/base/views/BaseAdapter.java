@@ -1,4 +1,4 @@
-package com.ar4i.quicknotes.presentation.base;
+package com.ar4i.quicknotes.presentation.base.views;
 
 import java.util.ArrayList;
 import java.util.List;

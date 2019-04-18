@@ -8,8 +8,23 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:constraint_referenced_ids="
+            tv_title,
+            tv_creation_date,
+            tv_creation_date_label,
+            tv_body, img_edit,
+            img_remove,
+            v_top_divider,
+            v_bottom_divider" />
 
         <TextView
             android:id="@+id/tv_title"

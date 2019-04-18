@@ -1,6 +1,10 @@
 package com.ar4i.quicknotes.presentation.note.notedetails.views;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +20,8 @@ import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Group;
 import io.reactivex.Observable;
 
 public class NoteDetailsFragment extends BaseFragment implements INoteDetailsView {
@@ -46,6 +52,8 @@ public class NoteDetailsFragment extends BaseFragment implements INoteDetailsVie
     TextView tvBody;
     ImageView imgEdit;
     ImageView imgRemove;
+    ConstraintLayout clContainer;
+    Group group;
 
     //-------------------------------------------end UI---------------------------------------------
 
@@ -96,6 +104,8 @@ public class NoteDetailsFragment extends BaseFragment implements INoteDetailsVie
         tvBody = getActivity().findViewById(R.id.tv_body);
         imgEdit = getActivity().findViewById(R.id.img_edit);
         imgRemove = getActivity().findViewById(R.id.img_remove);
+        clContainer = getActivity().findViewById(R.id.cl_container);
+        group = getActivity().findViewById(R.id.group);
     }
 
     private void setNote(NoteVm note) {
@@ -137,5 +147,23 @@ public class NoteDetailsFragment extends BaseFragment implements INoteDetailsVie
         tvBody.setText(body);
     }
 
+    @Override
+    public void showSuccessfulView() {
+        group.setVisibility(View.GONE);
+        View.inflate(getActivity(), R.layout.view_done, clContainer);
+        clContainer.setAlpha(0.0f);
+        clContainer.animate()
+                .setDuration(2000)
+                .alpha(1.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        getActivity().onBackPressed();
+                    }
+                });
+    }
+
     //-------------------------------------------end implements INoteDetailsView--------------------
+
 }

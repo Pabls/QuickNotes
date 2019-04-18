@@ -52,11 +52,8 @@ public class NoteDetailsPresenter extends BasePresenter<INoteDetailsView> {
         track(iNotesInteractor.removeNote(noteVm)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {
-
-                }, error -> {
-
-                }));
+                .subscribe(() -> getView().showSuccessfulView(),
+                        error -> getView().showMessage(error.getMessage())));
     }
 
     // endregion-------------------------------------Private methods--------------------------------

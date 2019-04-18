@@ -92,8 +92,6 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
         track(iNotesInteractor.sendNote(noteVm)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(_void -> getView().showLoad())
-                .doOnTerminate(() -> getView().hideLoad())
                 .subscribe(() -> {
                     clearinput();
                     deleteLastNote();

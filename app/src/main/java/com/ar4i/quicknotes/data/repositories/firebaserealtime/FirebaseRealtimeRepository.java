@@ -30,7 +30,10 @@ public class FirebaseRealtimeRepository implements IFirebaseRealtimeRepository {
     public Completable sendNote(NoteVm noteVm) {
         return Completable.create(emitter -> {
             DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(NOTES_PATH);
-            dbRef.child(noteVm.getUserId()).push().setValue(new Note(noteVm.getTimestamp(), noteVm.getTitle(), noteVm.getBody()));
+            dbRef.child(noteVm.getUserId())
+                    .child(getUid(noteVm.getUserId(), noteVm.getTimestamp()))
+                    .push()
+                    .setValue(new Note(noteVm.getTimestamp(), noteVm.getTitle(), noteVm.getBody()));
             emitter.onComplete();
         });
     }
@@ -39,8 +42,9 @@ public class FirebaseRealtimeRepository implements IFirebaseRealtimeRepository {
     public Completable removeNote(NoteVm noteVm) {
         return Completable.create(emitter -> {
             DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(NOTES_PATH);
-            DatabaseReference notesRef = dbRef.child(noteVm.getUserId());
-            String key = notesRef.getKey();
+            dbRef.child(noteVm.getUserId())
+                    .child(getUid(noteVm.getUserId(), noteVm.getTimestamp()))
+                    .removeValue();
             emitter.onComplete();
         });
     }
@@ -49,19 +53,20 @@ public class FirebaseRealtimeRepository implements IFirebaseRealtimeRepository {
     public Observable<List<NoteVm>> getNotes(String userId) {
         return Observable.create(emitter -> {
             DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(NOTES_PATH);
-
             dbRef.child(userId).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     List<NoteVm> noteVms = new ArrayList<>();
                     Iterable<DataSnapshot> iterableDataSnapshot = dataSnapshot.getChildren();
                     try {
-                        Note note = dataSnapshot.child(userId).getValue(Note.class);
                         Iterator<DataSnapshot> iterator = iterableDataSnapshot.iterator();
                         while (iterator.hasNext()) {
-                            Note res = iterator.next().getValue(Note.class);
-                            if (res != null)
-                                noteVms.add(new NoteVm(res.getTimestamp(), res.getTitle(), res.getBody(), userId));
+                            Iterator<DataSnapshot> childIterator = iterator.next().getChildren().iterator();
+                            while (childIterator.hasNext()) {
+                                Note res = childIterator.next().getValue(Note.class);
+                                if (res != null)
+                                    noteVms.add(new NoteVm(res.getTimestamp(), res.getTitle(), res.getBody(), userId));
+                            }
                         }
                     } catch (Exception e) {
                     }
@@ -71,9 +76,19 @@ public class FirebaseRealtimeRepository implements IFirebaseRealtimeRepository {
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
+
+
             });
         });
     }
 
     //-------------------------------------------end implements IFirebaseRealtimeRepository---------
+
+    //==========================================start Private methods===============================
+
+    private String getUid(String userId, long timestamp) {
+        return userId + String.valueOf(timestamp);
+    }
+
+    //-------------------------------------------end Private methods--------------------------------
 }

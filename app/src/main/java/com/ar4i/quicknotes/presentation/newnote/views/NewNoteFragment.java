@@ -22,6 +22,7 @@ import javax.inject.Inject;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Group;
 import io.reactivex.Observable;
 
 public class NewNoteFragment extends BaseFragment implements INewNoteView {
@@ -45,6 +46,7 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
     EditText etBody;
     FloatingActionButton fabSendNote;
     ConstraintLayout clContainer;
+    Group group;
 
     // endregion-------------------------------------UI---------------------------------------------
 
@@ -119,14 +121,14 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
     @Override
     public void setTitle(String title) {
         etTitle.setText(title);
-        if(!title.isEmpty())
+        if (!title.isEmpty())
             etTitle.setSelection(etTitle.getText().length());
     }
 
     @Override
     public void setBody(String body) {
         etBody.setText(body);
-        if(!body.isEmpty())
+        if (!body.isEmpty())
             etBody.setSelection(etBody.getText().length());
     }
 
@@ -141,6 +143,7 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
     // region========================================Private methods================================
 
     private void showSuccessfulView() {
+        group.setVisibility(View.GONE);
         View.inflate(getActivity(), R.layout.view_done, clContainer);
         clContainer.setAlpha(0.0f);
         clContainer.animate()
@@ -162,6 +165,7 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
 
     private void removeSuccessView() {
         clContainer.removeViewAt(clContainer.getChildCount() - 1);
+        group.setVisibility(View.VISIBLE);
         etTitle.requestFocus();
     }
 
@@ -172,6 +176,7 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
         etBody = getActivity().findViewById(R.id.et_body);
         fabSendNote = getActivity().findViewById(R.id.fab_send);
         clContainer = getActivity().findViewById(R.id.cl_container);
+        group = getActivity().findViewById(R.id.group);
         etTitle.clearFocus();
         etBody.clearFocus();
     }

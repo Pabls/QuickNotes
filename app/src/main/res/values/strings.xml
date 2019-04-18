@@ -17,7 +17,6 @@
 
     <string name="new_note_fragment.edittext.hint.title">Note title</string>
     <string name="new_note_fragment.edittext.hint.body">Your note</string>
-    <string name="new_note_fragment.message.text.successfully_saved">Note successfully saved</string>
 
     <string name="notes_fragment.text.no_notes">You have not created any notes yet</string>
 

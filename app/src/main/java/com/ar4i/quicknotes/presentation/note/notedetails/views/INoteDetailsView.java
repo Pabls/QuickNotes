@@ -17,4 +17,6 @@ public interface INoteDetailsView extends IMvpView {
     void setCreationDate(String date);
 
     void setBody(String body);
+
+    void showSuccessfulView();
 }

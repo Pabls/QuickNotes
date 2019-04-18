@@ -1,6 +1,5 @@
 package com.ar4i.quicknotes.presentation.notes.views;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -95,8 +94,8 @@ public class NotesFragment extends BaseFragment implements INotesView {
     }
 
     @Override
-    public void navigateToNoteActivity() {
-        getActivity().startActivity(new Intent(getActivity(), NoteActivity.class));
+    public void navigateToNoteActivity(NoteVm noteVm) {
+        getActivity().startActivity(NoteActivity.getStartIntent(getActivity(), noteVm));
     }
 
     //-------------------------------------------end implements INotesView--------------------------

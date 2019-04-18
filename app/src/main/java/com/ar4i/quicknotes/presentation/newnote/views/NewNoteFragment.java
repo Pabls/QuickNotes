@@ -172,6 +172,8 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
         etBody = getActivity().findViewById(R.id.et_body);
         fabSendNote = getActivity().findViewById(R.id.fab_send);
         clContainer = getActivity().findViewById(R.id.cl_container);
+        etTitle.clearFocus();
+        etBody.clearFocus();
     }
 
     // endregion-------------------------------------Private methods--------------------------------

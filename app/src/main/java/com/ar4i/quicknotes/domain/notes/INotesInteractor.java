@@ -12,11 +12,13 @@ public interface INotesInteractor {
 
     Completable saveNote(NoteVm note);
 
-    Single<NoteVm> getLastSavedNote();
+    Single<NoteVm> getLastUnsavedNote();
 
     Completable deleteLastNote();
 
     Completable sendNote(NoteVm noteVm);
 
     Observable<List<NoteVm>> getNotes(String userId);
+
+    Completable removeNote(NoteVm noteVm);
 }

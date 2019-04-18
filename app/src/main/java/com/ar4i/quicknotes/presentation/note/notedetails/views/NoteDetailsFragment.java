@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ar4i.quicknotes.R;
+import com.ar4i.quicknotes.data.models.NoteVm;
 import com.ar4i.quicknotes.presentation.base.presenter.IPresenter;
 import com.ar4i.quicknotes.presentation.base.views.BaseFragment;
 import com.ar4i.quicknotes.presentation.note.notedetails.presenter.NoteDetailsPresenter;
@@ -19,12 +20,21 @@ import io.reactivex.Observable;
 
 public class NoteDetailsFragment extends BaseFragment implements INoteDetailsView {
 
-    public static NoteDetailsFragment newInstance(){ return new NoteDetailsFragment(); }
+    private static final String EXTRA_NOTE = "com.ar4i.quicknotes.extra_note";
+
+    public static NoteDetailsFragment newInstance(NoteVm noteVm) {
+        NoteDetailsFragment fragment = new NoteDetailsFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(EXTRA_NOTE, noteVm);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     // region========================================Fields=========================================
 
     @Inject
     NoteDetailsPresenter noteDetailsPresenter;
+    NoteVm note;
 
     // endregion-------------------------------------Fields-----------------------------------------
 
@@ -44,6 +54,13 @@ public class NoteDetailsFragment extends BaseFragment implements INoteDetailsVie
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        try {
+            NoteVm noteVm = (NoteVm) getArguments().getSerializable(EXTRA_NOTE);
+            setNote(noteVm);
+        } catch (Exception e) {
+            note = null;
+        }
+
         initView();
         super.onViewCreated(view, savedInstanceState);
     }
@@ -81,6 +98,10 @@ public class NoteDetailsFragment extends BaseFragment implements INoteDetailsVie
         imgRemove = getActivity().findViewById(R.id.img_remove);
     }
 
+    private void setNote(NoteVm note) {
+        this.note = note;
+    }
+
     //-------------------------------------------end Private methods--------------------------------
 
 
@@ -94,6 +115,11 @@ public class NoteDetailsFragment extends BaseFragment implements INoteDetailsVie
     @Override
     public Observable<Boolean> onRemoveIconClick() {
         return RxView.clicks(imgRemove).map(click -> true);
+    }
+
+    @Override
+    public NoteVm getNote() {
+        return note;
     }
 
     @Override

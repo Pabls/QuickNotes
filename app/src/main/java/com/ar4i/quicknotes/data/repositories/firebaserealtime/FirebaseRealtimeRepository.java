@@ -36,6 +36,16 @@ public class FirebaseRealtimeRepository implements IFirebaseRealtimeRepository {
     }
 
     @Override
+    public Completable removeNote(NoteVm noteVm) {
+        return Completable.create(emitter -> {
+            DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(NOTES_PATH);
+            DatabaseReference notesRef = dbRef.child(noteVm.getUserId());
+            String key = notesRef.getKey();
+            emitter.onComplete();
+        });
+    }
+
+    @Override
     public Observable<List<NoteVm>> getNotes(String userId) {
         return Observable.create(emitter -> {
             DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(NOTES_PATH);

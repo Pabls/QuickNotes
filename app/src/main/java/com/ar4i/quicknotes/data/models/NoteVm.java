@@ -1,10 +1,13 @@
 package com.ar4i.quicknotes.data.models;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class NoteVm {
+public class NoteVm implements Serializable {
     private static final String PATTERN = "dd.MM.yyyy HH:mm:ss";
     private String creationDate;
     private long timestamp;

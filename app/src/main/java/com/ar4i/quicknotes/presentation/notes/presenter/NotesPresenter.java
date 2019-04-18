@@ -34,9 +34,10 @@ public class NotesPresenter extends BasePresenter<INotesView> {
         super.attachView(view);
         getUser();
         track(getView().onListItemClick()
-                .subscribe(index -> getView().navigateToNoteActivity()));
+                .subscribe(index -> {
+                    getView().navigateToNoteActivity(notes.get(index));
+                }));
     }
-
 
     //-------------------------------------------end extends BasePresenter<INotesView>--------------
 
@@ -60,6 +61,7 @@ public class NotesPresenter extends BasePresenter<INotesView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(notes -> {
+                    this.notes = notes;
                     getView().showNoNotesMessage(notes == null || notes.isEmpty());
                     getView().setNotes(notes);
                 }, error -> getView().showMessage(error.getMessage())));

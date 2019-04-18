@@ -36,7 +36,7 @@ public class NotesInteractor implements INotesInteractor {
     }
 
     @Override
-    public Single<NoteVm> getLastSavedNote() {
+    public Single<NoteVm> getLastUnsavedNote() {
         return iDatabaseRepository.getLastNote();
     }
 
@@ -53,6 +53,11 @@ public class NotesInteractor implements INotesInteractor {
     @Override
     public Observable<List<NoteVm>> getNotes(String userId) {
         return iFirebaseRealtimeRepository.getNotes(userId);
+    }
+
+    @Override
+    public Completable removeNote(NoteVm noteVm) {
+        return iFirebaseRealtimeRepository.removeNote(noteVm);
     }
 
     // endregion-------------------------------------implements INotesInteractor--------------------

@@ -23,7 +23,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.main.MainActivity" />
+        <activity android:name=".presentation.main.MainActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
 
         <activity android:name=".presentation.note.root.NoteActivity" />
 

@@ -15,5 +15,5 @@ public interface INotesView extends IMvpView {
 
     void showNoNotesMessage(boolean show);
 
-    void navigateToNoteActivity();
+    void navigateToNoteActivity(NoteVm noteVm);
 }

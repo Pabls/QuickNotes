@@ -1,6 +1,7 @@
 package com.ar4i.quicknotes.app.di.modules;
 
 import com.ar4i.quicknotes.domain.auth.AuthInteractor;
+import com.ar4i.quicknotes.domain.notes.INotesInteractor;
 import com.ar4i.quicknotes.domain.notes.NotesInteractor;
 import com.ar4i.quicknotes.domain.resources.ResourceInteractor;
 import com.ar4i.quicknotes.presentation.newnote.presenter.NewNotePresenter;
@@ -39,7 +40,7 @@ public class ViewModule {
     }
 
     @Provides
-    NoteDetailsPresenter provideNoteDetailsPresenter() {
-        return new NoteDetailsPresenter();
+    NoteDetailsPresenter provideNoteDetailsPresenter(NotesInteractor notesInteractor) {
+        return new NoteDetailsPresenter(notesInteractor);
     }
 }

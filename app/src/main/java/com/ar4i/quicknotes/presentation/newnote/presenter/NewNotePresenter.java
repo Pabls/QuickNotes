@@ -117,7 +117,7 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
     }
 
     private void getLastNote() {
-        track(iNotesInteractor.getLastSavedNote()
+        track(iNotesInteractor.getLastUnsavedNote()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(_void -> getView().showLoad())

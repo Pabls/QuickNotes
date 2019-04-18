@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="@dimen/match_constraint"
@@ -19,11 +18,12 @@
             android:layout_marginStart="@dimen/margin_8"
             android:layout_marginTop="@dimen/margin_8"
             android:layout_marginEnd="@dimen/margin_8"
+            android:gravity="center"
             android:textColor="@color/brown"
             android:textSize="@dimen/title_size"
             android:textStyle="bold"
-            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@tools:sample/cities" />
@@ -33,9 +33,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_8"
-            app:layout_constraintBottom_toBottomOf="@+id/img_edit"
+            android:layout_marginTop="@dimen/margin_8"
+            android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/tv_creation_date_label"
-            app:layout_constraintTop_toTopOf="@+id/img_edit"
+            app:layout_constraintTop_toBottomOf="@+id/v_top_divider"
             tools:text="@tools:sample/date/mmddyy" />
 
         <TextView
@@ -43,10 +44,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_8"
+            android:layout_marginTop="@dimen/margin_8"
             android:text="@string/notes_item.text.created_at"
-            app:layout_constraintBottom_toBottomOf="@+id/img_edit"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/img_edit" />
+            app:layout_constraintTop_toBottomOf="@+id/v_top_divider" />
 
         <TextView
             android:id="@+id/tv_body"
@@ -55,11 +57,10 @@
             android:layout_marginStart="@dimen/margin_8"
             android:layout_marginTop="@dimen/margin_8"
             android:layout_marginEnd="@dimen/margin_8"
-            android:layout_marginBottom="@dimen/margin_8"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_edit"
+            app:layout_constraintTop_toBottomOf="@+id/tv_creation_date"
             tools:text="@tools:sample/lorem" />
 
         <ImageView
@@ -67,9 +68,14 @@
             android:layout_width="@dimen/small_icon_size"
             android:layout_height="@dimen/small_icon_size"
             android:layout_marginTop="@dimen/margin_8"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="@dimen/margin_16"
+            android:layout_marginBottom="@dimen/margin_8"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/img_remove"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            app:layout_constraintTop_toBottomOf="@+id/v_bottom_divider"
             app:srcCompat="@drawable/ic_mode" />
 
         <ImageView
@@ -77,10 +83,39 @@
             android:layout_width="@dimen/small_icon_size"
             android:layout_height="@dimen/small_icon_size"
             android:layout_marginTop="@dimen/margin_8"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="@dimen/margin_16"
+            android:layout_marginBottom="@dimen/margin_8"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            app:layout_constraintTop_toBottomOf="@+id/v_bottom_divider"
             app:srcCompat="@drawable/ic_delete" />
+
+        <View
+            android:id="@+id/v_top_divider"
+            android:layout_width="@dimen/match_constraint"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/margin_8"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/margin_8"
+            android:background="@color/brown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+        <View
+            android:id="@+id/v_bottom_divider"
+            android:layout_width="@dimen/match_constraint"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/margin_8"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/margin_8"
+            android:background="@color/brown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_body" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -11,5 +11,6 @@ import io.reactivex.Single;
 public interface IFirebaseRealtimeRepository {
     Completable sendNote(NoteVm noteVm);
     Completable removeNote(NoteVm noteVm);
+    Completable updateNote(NoteVm noteVm);
     Observable<List<NoteVm>> getNotes(String userId);
 }

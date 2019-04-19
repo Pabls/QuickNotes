@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:visibility="visible"
         app:constraint_referenced_ids="
-            til_title, til_body,fab_send, img_logo" />
+            til_title, til_body, fab_send, img_logo" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_title"

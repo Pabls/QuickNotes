@@ -30,9 +30,7 @@ public class NoteDetailsPresenter extends BasePresenter<INoteDetailsView> {
         setDataToView(noteVm);
 
         track(getView().onEditIconClick()
-                .subscribe(click -> {
-
-                }));
+                .subscribe(click -> getView().navigateToNoteEditingFragment(noteVm)));
 
         track(getView().onRemoveIconClick()
                 .subscribe(click -> removeNote(noteVm)));

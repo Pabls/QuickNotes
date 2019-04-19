@@ -1,10 +1,13 @@
 package com.ar4i.quicknotes.presentation.note.noteediting.views;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
 import com.ar4i.quicknotes.R;
+import com.ar4i.quicknotes.data.models.NoteVm;
 import com.ar4i.quicknotes.presentation.base.presenter.IPresenter;
 import com.ar4i.quicknotes.presentation.base.views.BaseFragment;
 import com.ar4i.quicknotes.presentation.note.noteediting.presenter.NoteEditingPresenter;
@@ -16,19 +19,27 @@ import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Group;
 import io.reactivex.Observable;
 
 public class NoteEditingFragment extends BaseFragment implements INoteEditingView {
 
-    public static NoteEditingFragment newInstance() {
-        return new NoteEditingFragment();
-    }
+    private static final String EXTRA_NOTE = "com.ar4i.quicknotes.extra_note";
 
+    public static NoteEditingFragment newInstance(NoteVm noteVm) {
+        NoteEditingFragment fragment = new NoteEditingFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(EXTRA_NOTE, noteVm);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     // region========================================Fields=========================================
 
     @Inject
     NoteEditingPresenter noteEditingPresenter;
+    NoteVm note;
 
     // endregion-------------------------------------Fields-----------------------------------------
 
@@ -38,6 +49,8 @@ public class NoteEditingFragment extends BaseFragment implements INoteEditingVie
     EditText etTitle;
     EditText etBody;
     FloatingActionButton fabSave;
+    Group group;
+    ConstraintLayout clContainer;
 
     //-------------------------------------------end UI---------------------------------------------
 
@@ -47,6 +60,14 @@ public class NoteEditingFragment extends BaseFragment implements INoteEditingVie
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         initView();
+        try {
+            NoteVm noteVm = (NoteVm) getArguments().getSerializable(EXTRA_NOTE);
+            setNote(noteVm);
+        } catch (Exception e) {
+            note = null;
+        }
+
+
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -76,9 +97,15 @@ public class NoteEditingFragment extends BaseFragment implements INoteEditingVie
     //==========================================start Private methods===============================
 
     private void initView() {
-        etTitle = getActivity().findViewById(R.id.tv_title);
+        etTitle = getActivity().findViewById(R.id.et_title);
         etBody = getActivity().findViewById(R.id.et_body);
         fabSave = getActivity().findViewById(R.id.fab_save);
+        clContainer = getActivity().findViewById(R.id.cl_container);
+        group = getActivity().findViewById(R.id.group);
+    }
+
+    private void setNote(NoteVm note) {
+        this.note = note;
     }
 
     //-------------------------------------------end Private methods--------------------------------
@@ -112,6 +139,11 @@ public class NoteEditingFragment extends BaseFragment implements INoteEditingVie
     }
 
     @Override
+    public NoteVm getNote() {
+        return note;
+    }
+
+    @Override
     public void setTitle(String title) {
         etTitle.setText(title);
     }
@@ -124,6 +156,24 @@ public class NoteEditingFragment extends BaseFragment implements INoteEditingVie
     @Override
     public void enableSaveButton(boolean enable) {
         fabSave.setEnabled(enable);
+    }
+
+    @Override
+    public void showSuccessfulView() {
+        group.setVisibility(View.GONE);
+        View.inflate(getActivity(), R.layout.view_done, clContainer);
+        clContainer.setAlpha(0.0f);
+        clContainer.animate()
+                .setDuration(1500)
+                .alpha(1.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        if (getActivity() != null)
+                            getActivity().onBackPressed();
+                    }
+                });
     }
 
     //-------------------------------------------end implements INoteEditingView--------------------

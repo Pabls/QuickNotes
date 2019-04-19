@@ -12,6 +12,8 @@ public interface INoteDetailsView extends IMvpView {
 
     NoteVm getNote();
 
+    void navigateToNoteEditingFragment(NoteVm note);
+
     void setTitle(String title);
 
     void setCreationDate(String date);

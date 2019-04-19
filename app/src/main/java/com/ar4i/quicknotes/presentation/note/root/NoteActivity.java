@@ -84,7 +84,7 @@ public class NoteActivity extends AppCompatActivity {
 
     //==========================================start Private methods===============================
 
-    private void showFragment(BaseFragment fragment) {
+    public void showFragment(BaseFragment fragment) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fl_container, fragment)
                 .commit();

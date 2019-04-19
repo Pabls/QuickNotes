@@ -147,7 +147,7 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
         View.inflate(getActivity(), R.layout.view_done, clContainer);
         clContainer.setAlpha(0.0f);
         clContainer.animate()
-                .setDuration(2000)
+                .setDuration(1500)
                 .alpha(1.0f)
                 .setListener(new AnimatorListenerAdapter() {
                     @Override

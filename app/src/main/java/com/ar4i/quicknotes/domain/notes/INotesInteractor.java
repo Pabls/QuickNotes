@@ -21,4 +21,6 @@ public interface INotesInteractor {
     Observable<List<NoteVm>> getNotes(String userId);
 
     Completable removeNote(NoteVm noteVm);
+
+    Completable updateNote(NoteVm noteVm);
 }

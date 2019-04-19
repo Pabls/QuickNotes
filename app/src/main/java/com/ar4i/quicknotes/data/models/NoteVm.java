@@ -52,6 +52,14 @@ public class NoteVm implements Serializable {
         return userId;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
     // endregion-------------------------------------GET/SET--------------------------------------------
 
     // region========================================Private methods================================

@@ -35,8 +35,8 @@ public class ViewModule {
     }
 
     @Provides
-    NoteEditingPresenter provideNoteEditingPresenter() {
-        return new NoteEditingPresenter();
+    NoteEditingPresenter provideNoteEditingPresenter(NotesInteractor notesInteractor) {
+        return new NoteEditingPresenter(notesInteractor);
     }
 
     @Provides

@@ -2,9 +2,7 @@ package com.ar4i.quicknotes.presentation.note.notedetails.views;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +12,7 @@ import com.ar4i.quicknotes.data.models.NoteVm;
 import com.ar4i.quicknotes.presentation.base.presenter.IPresenter;
 import com.ar4i.quicknotes.presentation.base.views.BaseFragment;
 import com.ar4i.quicknotes.presentation.note.notedetails.presenter.NoteDetailsPresenter;
+import com.ar4i.quicknotes.presentation.note.noteediting.views.NoteEditingFragment;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import javax.inject.Inject;
@@ -133,6 +132,15 @@ public class NoteDetailsFragment extends BaseFragment implements INoteDetailsVie
     }
 
     @Override
+    public void navigateToNoteEditingFragment(NoteVm note) {
+        if (getActivity() != null)
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fl_container, NoteEditingFragment.newInstance(note))
+                    .commit();
+    }
+
+    @Override
     public void setTitle(String title) {
         tvTitle.setText(title);
     }
@@ -153,13 +161,14 @@ public class NoteDetailsFragment extends BaseFragment implements INoteDetailsVie
         View.inflate(getActivity(), R.layout.view_done, clContainer);
         clContainer.setAlpha(0.0f);
         clContainer.animate()
-                .setDuration(2000)
+                .setDuration(1500)
                 .alpha(1.0f)
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
-                        getActivity().onBackPressed();
+                        if (getActivity() != null)
+                            getActivity().onBackPressed();
                     }
                 });
     }

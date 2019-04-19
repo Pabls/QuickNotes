@@ -18,9 +18,14 @@ import io.reactivex.Observable;
 
 public class FirebaseRealtimeRepository implements IFirebaseRealtimeRepository {
 
+    public FirebaseRealtimeRepository() {
+        initFirebaseDatabaseInstance();
+    }
+
     // region========================================Fields=========================================
 
     public static final String NOTES_PATH = "notes";
+    private static DatabaseReference dbRef;
 
     // endregion-------------------------------------Fields-----------------------------------------
 
@@ -29,11 +34,7 @@ public class FirebaseRealtimeRepository implements IFirebaseRealtimeRepository {
     @Override
     public Completable sendNote(NoteVm noteVm) {
         return Completable.create(emitter -> {
-            DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(NOTES_PATH);
-            dbRef.child(noteVm.getUserId())
-                    .child(getUid(noteVm.getUserId(), noteVm.getTimestamp()))
-                    .push()
-                    .setValue(new Note(noteVm.getTimestamp(), noteVm.getTitle(), noteVm.getBody()));
+            saveNote(noteVm);
             emitter.onComplete();
         });
     }
@@ -41,10 +42,16 @@ public class FirebaseRealtimeRepository implements IFirebaseRealtimeRepository {
     @Override
     public Completable removeNote(NoteVm noteVm) {
         return Completable.create(emitter -> {
-            DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(NOTES_PATH);
-            dbRef.child(noteVm.getUserId())
-                    .child(getUid(noteVm.getUserId(), noteVm.getTimestamp()))
-                    .removeValue();
+            deleteNote(noteVm);
+            emitter.onComplete();
+        });
+    }
+
+    @Override
+    public Completable updateNote(NoteVm noteVm) {
+        return Completable.create(emitter -> {
+            deleteNote(noteVm);
+            saveNote(noteVm);
             emitter.onComplete();
         });
     }
@@ -52,7 +59,6 @@ public class FirebaseRealtimeRepository implements IFirebaseRealtimeRepository {
     @Override
     public Observable<List<NoteVm>> getNotes(String userId) {
         return Observable.create(emitter -> {
-            DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(NOTES_PATH);
             dbRef.child(userId).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -76,8 +82,6 @@ public class FirebaseRealtimeRepository implements IFirebaseRealtimeRepository {
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
-
-
             });
         });
     }
@@ -85,6 +89,27 @@ public class FirebaseRealtimeRepository implements IFirebaseRealtimeRepository {
     //-------------------------------------------end implements IFirebaseRealtimeRepository---------
 
     //==========================================start Private methods===============================
+
+    private static void initFirebaseDatabaseInstance() {
+        if (dbRef == null) {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            dbRef = FirebaseDatabase.getInstance().getReference(NOTES_PATH);
+            dbRef.keepSynced(true);
+        }
+    }
+
+    private void saveNote(NoteVm noteVm) {
+        dbRef.child(noteVm.getUserId())
+                .child(getUid(noteVm.getUserId(), noteVm.getTimestamp()))
+                .push()
+                .setValue(new Note(noteVm.getTimestamp(), noteVm.getTitle(), noteVm.getBody()));
+    }
+
+    private void deleteNote(NoteVm noteVm) {
+        dbRef.child(noteVm.getUserId())
+                .child(getUid(noteVm.getUserId(), noteVm.getTimestamp()))
+                .removeValue();
+    }
 
     private String getUid(String userId, long timestamp) {
         return userId + String.valueOf(timestamp);

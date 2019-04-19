@@ -60,5 +60,10 @@ public class NotesInteractor implements INotesInteractor {
         return iFirebaseRealtimeRepository.removeNote(noteVm);
     }
 
+    @Override
+    public Completable updateNote(NoteVm noteVm) {
+        return iFirebaseRealtimeRepository.updateNote(noteVm);
+    }
+
     // endregion-------------------------------------implements INotesInteractor--------------------
 }

@@ -1,5 +1,7 @@
 package com.ar4i.quicknotes.data.entities;
 
+import com.google.firebase.database.Exclude;
+
 public class Note {
     // region========================================Fields=========================================
 
@@ -19,27 +21,27 @@ public class Note {
     }
 
     // region========================================SET/GET========================================
-
+    @Exclude
     public long getTimestamp() {
         return timestamp;
     }
-
+    @Exclude
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
-
+    @Exclude
     public String getTitle() {
         return title;
     }
-
+    @Exclude
     public void setTitle(String title) {
         this.title = title;
     }
-
+    @Exclude
     public String getBody() {
         return body;
     }
-
+    @Exclude
     public void setBody(String body) {
         this.body = body;
     }

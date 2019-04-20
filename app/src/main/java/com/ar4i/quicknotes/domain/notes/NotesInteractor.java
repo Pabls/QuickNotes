@@ -1,11 +1,13 @@
 package com.ar4i.quicknotes.domain.notes;
 
+import com.ar4i.quicknotes.data.entities.Note;
 import com.ar4i.quicknotes.data.models.NoteVm;
 import com.ar4i.quicknotes.data.repositories.database.IDatabaseRepository;
 import com.ar4i.quicknotes.data.repositories.firebaserealtime.IFirebaseRealtimeRepository;
 
 import org.reactivestreams.Subscription;
 
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Completable;
@@ -52,7 +54,7 @@ public class NotesInteractor implements INotesInteractor {
 
     @Override
     public Observable<List<NoteVm>> getNotes(String userId) {
-        return iFirebaseRealtimeRepository.getNotes(userId);
+        return iFirebaseRealtimeRepository.getNotes(userId).map(noteVms -> reverseNotes(noteVms));
     }
 
     @Override
@@ -66,4 +68,10 @@ public class NotesInteractor implements INotesInteractor {
     }
 
     // endregion-------------------------------------implements INotesInteractor--------------------
+
+    private List<NoteVm> reverseNotes(List<NoteVm> notes) {
+        if (notes != null && !notes.isEmpty())
+            Collections.reverse(notes);
+        return notes;
+    }
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import com.ar4i.quicknotes.R;
 import com.ar4i.quicknotes.presentation.base.views.BaseFragment;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Group;
@@ -24,10 +25,9 @@ public abstract class SuccessFragment extends BaseFragment implements ISuccessVi
 
     //==========================================start Lifecycle=====================================
 
-
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         clContainer = getActivity().findViewById(R.id.cl_container);
         group = getActivity().findViewById(R.id.group);
     }

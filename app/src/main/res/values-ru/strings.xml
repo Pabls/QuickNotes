@@ -15,13 +15,21 @@
     <string name="tab_layout.text.new_note">новая заметка</string>
     <string name="tab_layout.text.new_drawing">новый рисунок</string>
     <string name="tab_layout.text.my_notes">мои заметки</string>
+    <string name="tab_layout.text.tags">добавить тег</string>
 
     <string name="new_note_fragment.edittext.hint.title">Заголовок заметки</string>
     <string name="new_note_fragment.edittext.hint.body">Ваша заметка</string>
 
     <string name="notes_fragment.text.no_notes">У все еще нет созданных заметок</string>
 
-
     <string name="notes_item.text.created_at">создана :</string>
+
+
+    <string name="tags_fragment.edittext.hint.tag_name">Введите новый тег</string>
+    <string name="tags_fragment.text.tag_color">ВЫБЕРИТЕ ЦВЕТ</string>
+
+    <string name="color_selection_fragment.text.title">ВЫБЕРИТЕ ЦВЕТ</string>
+    <string name="color_selection_fragment.positive_button_text">Сохранить</string>
+    <string name="color_selection_fragment.negative_button_text">Отмена</string>
 
 </resources>

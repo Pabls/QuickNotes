@@ -14,6 +14,7 @@
     <string name="tab_layout.text.new_note">NEW NOTE</string>
     <string name="tab_layout.text.new_drawing">NEW DRAWING</string>
     <string name="tab_layout.text.my_notes">MY NOTES</string>
+    <string name="tab_layout.text.tags">ADD TAG</string>
 
     <string name="new_note_fragment.edittext.hint.title">Note title</string>
     <string name="new_note_fragment.edittext.hint.body">Your note</string>
@@ -21,5 +22,12 @@
     <string name="notes_fragment.text.no_notes">You have not created any notes yet</string>
 
     <string name="notes_item.text.created_at">created at :</string>
+
+    <string name="tags_fragment.edittext.hint.tag_name">Enter new tag</string>
+    <string name="tags_fragment.text.tag_color">SELECT COLOR</string>
+
+    <string name="color_selection_fragment.text.title">SELECT COLOR</string>
+    <string name="color_selection_fragment.positive_button_text">Save</string>
+    <string name="color_selection_fragment.negative_button_text">Cancel</string>
 
 </resources>

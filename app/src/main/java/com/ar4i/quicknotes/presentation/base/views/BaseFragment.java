@@ -88,9 +88,9 @@ public abstract class BaseFragment extends Fragment implements IMvpView {
 
     //==========================================start Abstract methods==============================
 
-    public abstract void inject();
+    protected abstract void inject();
 
-    public abstract int getLayoutId();
+    protected abstract int getLayoutId();
 
     protected abstract IPresenter<IMvpView> getPresenter();
 

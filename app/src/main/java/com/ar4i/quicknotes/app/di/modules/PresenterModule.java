@@ -7,6 +7,7 @@ import com.ar4i.quicknotes.data.repositories.resources.ResourceRepository;
 import com.ar4i.quicknotes.domain.auth.AuthInteractor;
 import com.ar4i.quicknotes.domain.notes.NotesInteractor;
 import com.ar4i.quicknotes.domain.resources.ResourceInteractor;
+import com.ar4i.quicknotes.domain.tags.TagsInteractor;
 
 import dagger.Module;
 import dagger.Provides;
@@ -27,5 +28,10 @@ public class PresenterModule {
     NotesInteractor provideNotesInteractor(DatabaseRepository databaseRepository,
                                            FirebaseRealtimeRepository firebaseRealtimeRepository) {
         return new NotesInteractor(databaseRepository, firebaseRealtimeRepository);
+    }
+
+    @Provides
+    TagsInteractor provideTagsInteractor(FirebaseRealtimeRepository firebaseRealtimeRepository) {
+        return new TagsInteractor(firebaseRealtimeRepository);
     }
 }

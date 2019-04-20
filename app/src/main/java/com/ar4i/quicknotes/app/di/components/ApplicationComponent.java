@@ -7,11 +7,13 @@ import com.ar4i.quicknotes.app.di.modules.InteractorModule;
 import com.ar4i.quicknotes.app.di.modules.PresenterModule;
 import com.ar4i.quicknotes.app.di.modules.ViewModule;
 import com.ar4i.quicknotes.data.database.NotesDatabase;
+import com.ar4i.quicknotes.presentation.colorselection.views.ColorSelectionFragment;
 import com.ar4i.quicknotes.presentation.newnote.views.NewNoteFragment;
 import com.ar4i.quicknotes.presentation.note.notedetails.views.NoteDetailsFragment;
 import com.ar4i.quicknotes.presentation.note.noteediting.views.NoteEditingFragment;
 import com.ar4i.quicknotes.presentation.notes.views.NotesFragment;
 import com.ar4i.quicknotes.presentation.signin.views.SignInFragment;
+import com.ar4i.quicknotes.presentation.tags.views.TagsFragment;
 
 import javax.inject.Singleton;
 
@@ -40,4 +42,8 @@ public interface ApplicationComponent {
     void inject(NoteEditingFragment noteEditingFragment);
 
     void inject(NoteDetailsFragment noteDetailsFragment);
+
+    void inject(TagsFragment tagsFragment);
+
+    void inject(ColorSelectionFragment colorSelectionFragment);
 }

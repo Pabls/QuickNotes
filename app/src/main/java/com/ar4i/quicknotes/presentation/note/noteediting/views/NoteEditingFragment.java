@@ -10,6 +10,7 @@ import com.ar4i.quicknotes.R;
 import com.ar4i.quicknotes.data.models.NoteVm;
 import com.ar4i.quicknotes.presentation.base.presenter.IPresenter;
 import com.ar4i.quicknotes.presentation.base.views.BaseFragment;
+import com.ar4i.quicknotes.presentation.note.base.SuccessFragment;
 import com.ar4i.quicknotes.presentation.note.noteediting.presenter.NoteEditingPresenter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -23,7 +24,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Group;
 import io.reactivex.Observable;
 
-public class NoteEditingFragment extends BaseFragment implements INoteEditingView {
+public class NoteEditingFragment extends SuccessFragment implements INoteEditingView {
 
     private static final String EXTRA_NOTE = "com.ar4i.quicknotes.extra_note";
 
@@ -49,8 +50,6 @@ public class NoteEditingFragment extends BaseFragment implements INoteEditingVie
     EditText etTitle;
     EditText etBody;
     FloatingActionButton fabSave;
-    Group group;
-    ConstraintLayout clContainer;
 
     //-------------------------------------------end UI---------------------------------------------
 
@@ -100,8 +99,6 @@ public class NoteEditingFragment extends BaseFragment implements INoteEditingVie
         etTitle = getActivity().findViewById(R.id.et_title);
         etBody = getActivity().findViewById(R.id.et_body);
         fabSave = getActivity().findViewById(R.id.fab_save);
-        clContainer = getActivity().findViewById(R.id.cl_container);
-        group = getActivity().findViewById(R.id.group);
     }
 
     private void setNote(NoteVm note) {
@@ -158,23 +155,6 @@ public class NoteEditingFragment extends BaseFragment implements INoteEditingVie
         fabSave.setEnabled(enable);
     }
 
-    @Override
-    public void showSuccessfulView() {
-        group.setVisibility(View.GONE);
-        View.inflate(getActivity(), R.layout.view_done, clContainer);
-        clContainer.setAlpha(0.0f);
-        clContainer.animate()
-                .setDuration(1500)
-                .alpha(1.0f)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        if (getActivity() != null)
-                            getActivity().onBackPressed();
-                    }
-                });
-    }
 
     //-------------------------------------------end implements INoteEditingView--------------------
 

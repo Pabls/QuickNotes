@@ -11,6 +11,7 @@ import com.ar4i.quicknotes.R;
 import com.ar4i.quicknotes.data.models.NoteVm;
 import com.ar4i.quicknotes.presentation.base.presenter.IPresenter;
 import com.ar4i.quicknotes.presentation.base.views.BaseFragment;
+import com.ar4i.quicknotes.presentation.note.base.SuccessFragment;
 import com.ar4i.quicknotes.presentation.note.notedetails.presenter.NoteDetailsPresenter;
 import com.ar4i.quicknotes.presentation.note.noteediting.views.NoteEditingFragment;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -23,7 +24,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Group;
 import io.reactivex.Observable;
 
-public class NoteDetailsFragment extends BaseFragment implements INoteDetailsView {
+public class NoteDetailsFragment extends SuccessFragment implements INoteDetailsView {
 
     private static final String EXTRA_NOTE = "com.ar4i.quicknotes.extra_note";
 
@@ -51,8 +52,6 @@ public class NoteDetailsFragment extends BaseFragment implements INoteDetailsVie
     TextView tvBody;
     ImageView imgEdit;
     ImageView imgRemove;
-    ConstraintLayout clContainer;
-    Group group;
 
     //-------------------------------------------end UI---------------------------------------------
 
@@ -103,8 +102,6 @@ public class NoteDetailsFragment extends BaseFragment implements INoteDetailsVie
         tvBody = getActivity().findViewById(R.id.tv_body);
         imgEdit = getActivity().findViewById(R.id.img_edit);
         imgRemove = getActivity().findViewById(R.id.img_remove);
-        clContainer = getActivity().findViewById(R.id.cl_container);
-        group = getActivity().findViewById(R.id.group);
     }
 
     private void setNote(NoteVm note) {
@@ -153,24 +150,6 @@ public class NoteDetailsFragment extends BaseFragment implements INoteDetailsVie
     @Override
     public void setBody(String body) {
         tvBody.setText(body);
-    }
-
-    @Override
-    public void showSuccessfulView() {
-        group.setVisibility(View.GONE);
-        View.inflate(getActivity(), R.layout.view_done, clContainer);
-        clContainer.setAlpha(0.0f);
-        clContainer.animate()
-                .setDuration(1500)
-                .alpha(1.0f)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        if (getActivity() != null)
-                            getActivity().onBackPressed();
-                    }
-                });
     }
 
     //-------------------------------------------end implements INoteDetailsView--------------------

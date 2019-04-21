@@ -11,6 +11,8 @@
     <string name="sign_in_activity.text_input_layout.text.invalid_email">invalid email</string>
     <string name="sign_in_activity.text_input_layout.text.invalid_password">minimum 6 characters</string>
 
+    <string name="main_menu.add_tag">Add tag</string>
+
     <string name="tab_layout.text.new_note">NEW NOTE</string>
     <string name="tab_layout.text.new_drawing">NEW DRAWING</string>
     <string name="tab_layout.text.my_notes">MY NOTES</string>

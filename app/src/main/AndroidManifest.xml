@@ -23,11 +23,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.main.MainActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name=".presentation.tags.views.TagsActivity"
+            android:windowSoftInputMode="adjustResize"/>
 
-        <activity android:name=".presentation.note.root.NoteActivity" />
+        <activity
+            android:name=".presentation.main.MainActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
+        <activity android:name=".presentation.note.root.NoteActivity"
+            android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>

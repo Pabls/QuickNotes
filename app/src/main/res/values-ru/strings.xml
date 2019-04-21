@@ -12,6 +12,8 @@
     <string name="sign_in_activity.text_input_layout.text.invalid_email">невалидный email</string>
     <string name="sign_in_activity.text_input_layout.text.invalid_password">минимум 6 символа</string>
 
+    <string name="main_menu.add_tag">Добавить тег</string>
+
     <string name="tab_layout.text.new_note">новая заметка</string>
     <string name="tab_layout.text.new_drawing">новый рисунок</string>
     <string name="tab_layout.text.my_notes">мои заметки</string>

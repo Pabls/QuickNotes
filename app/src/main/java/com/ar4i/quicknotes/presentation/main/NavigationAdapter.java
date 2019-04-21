@@ -3,6 +3,7 @@ package com.ar4i.quicknotes.presentation.main;
 
 import com.ar4i.quicknotes.R;
 import com.ar4i.quicknotes.app.App;
+import com.ar4i.quicknotes.presentation.newdraw.views.NewDrawFragment;
 import com.ar4i.quicknotes.presentation.newnote.views.NewNoteFragment;
 import com.ar4i.quicknotes.presentation.notes.views.NotesFragment;
 import com.ar4i.quicknotes.presentation.tags.views.TagsFragment;
@@ -20,7 +21,7 @@ public class NavigationAdapter extends FragmentPagerAdapter {
 
     //==========================================start Fields========================================
 
-    private static final int PAGES_COUNT = 3;
+    private static final int PAGES_COUNT = 2;
 
     //-------------------------------------------end Fields-----------------------------------------
 
@@ -34,9 +35,9 @@ public class NavigationAdapter extends FragmentPagerAdapter {
                 return NewNoteFragment.newInstance();
             case 1:
                 return NotesFragment.newInstance();
-            case 2:
-                return TagsFragment.newInstance();
 //            case 2:
+//                return TagsFragment.newInstance();
+//            case 3:
 //                return NewDrawFragment.newInstance();
             default:
                 return NotesFragment.newInstance();
@@ -56,9 +57,9 @@ public class NavigationAdapter extends FragmentPagerAdapter {
                 return getString(R.string.tab_layout_text_new_note);
             case 1:
                 return getString(R.string.tab_layout_text_my_notes);
-            case 2:
-                return getString(R.string.tab_layout_text_tags);
 //            case 2:
+//                return getString(R.string.tab_layout_text_tags);
+//            case 3:
 //                return getString(R.string.tab_layout_text_new_drawing);
             default:
                 return null;

@@ -1,6 +1,5 @@
 package com.ar4i.quicknotes.domain.notes;
 
-import com.ar4i.quicknotes.data.entities.Note;
 import com.ar4i.quicknotes.data.models.NoteVm;
 import com.ar4i.quicknotes.data.repositories.database.IDatabaseRepository;
 import com.ar4i.quicknotes.data.repositories.firebaserealtime.IFirebaseRealtimeRepository;

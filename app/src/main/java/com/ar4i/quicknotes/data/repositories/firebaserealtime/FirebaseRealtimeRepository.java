@@ -75,14 +75,12 @@ public class FirebaseRealtimeRepository implements IFirebaseRealtimeRepository {
                                 Note res = childIterator.next().getValue(Note.class);
                                 if (res != null) {
 
-
                                     List<TagVm> tagVms = new ArrayList<>();
                                     if (res.getTags() != null) {
                                         for (Tag tag : res.getTags()) {
                                             tagVms.add(new TagVm(tag.getName(), tag.getColor(), userId));
                                         }
                                     }
-
 
                                     noteVms.add(new NoteVm(res.getTimestamp(), res.getTitle(), res.getBody(), userId, tagVms));
                                 }

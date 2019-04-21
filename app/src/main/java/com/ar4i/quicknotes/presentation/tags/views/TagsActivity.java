@@ -10,6 +10,8 @@ import com.ar4i.quicknotes.presentation.base.views.BaseFragment;
 
 public class TagsActivity extends AppCompatActivity {
 
+    //==========================================start Lifecycle=====================================
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -20,6 +22,11 @@ public class TagsActivity extends AppCompatActivity {
 
         showFragment(TagsFragment.newInstance());
     }
+
+    //-------------------------------------------end Lifecycle--------------------------------------
+
+
+    //==========================================start  extends AppCompatActivity====================
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -34,6 +41,9 @@ public class TagsActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
+
+    //-------------------------------------------end  extends AppCompatActivity---------------------
+
 
     //==========================================start Private methods===============================
 

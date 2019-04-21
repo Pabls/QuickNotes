@@ -3,10 +3,8 @@ package com.ar4i.quicknotes.presentation.main;
 
 import com.ar4i.quicknotes.R;
 import com.ar4i.quicknotes.app.App;
-import com.ar4i.quicknotes.presentation.newdraw.views.NewDrawFragment;
 import com.ar4i.quicknotes.presentation.newnote.views.NewNoteFragment;
 import com.ar4i.quicknotes.presentation.notes.views.NotesFragment;
-import com.ar4i.quicknotes.presentation.tags.views.TagsFragment;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;

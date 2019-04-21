@@ -11,8 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.ar4i.quicknotes.R;
-import com.ar4i.quicknotes.presentation.base.views.BaseFragment;
-import com.ar4i.quicknotes.presentation.main.NavigationAdapter;
 import com.ar4i.quicknotes.presentation.tags.views.TagsActivity;
 import com.google.android.material.tabs.TabLayout;
 
@@ -47,6 +45,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        adapter = null;
+    }
+
+    //-------------------------------------------end Lifecycle--------------------------------------
+
+
+    //==========================================start extends AppCompatActivity=====================
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
@@ -64,13 +73,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        adapter = null;
-    }
+    //-------------------------------------------end extends AppCompatActivity----------------------
 
-    //-------------------------------------------end Lifecycle--------------------------------------
 
     //==========================================start Private methods===============================
 

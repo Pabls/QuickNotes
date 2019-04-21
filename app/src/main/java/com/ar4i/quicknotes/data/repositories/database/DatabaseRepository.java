@@ -3,7 +3,6 @@ package com.ar4i.quicknotes.data.repositories.database;
 import com.ar4i.quicknotes.data.database.NotesDatabase;
 import com.ar4i.quicknotes.data.database.dto.NoteDto;
 import com.ar4i.quicknotes.data.models.NoteVm;
-import com.ar4i.quicknotes.data.models.UserVm;
 
 import javax.inject.Inject;
 

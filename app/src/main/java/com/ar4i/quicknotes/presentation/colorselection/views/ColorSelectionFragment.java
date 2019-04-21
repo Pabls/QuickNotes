@@ -17,7 +17,6 @@ import com.jakewharton.rxbinding2.widget.RxSeekBar;
 
 import javax.inject.Inject;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import io.reactivex.Observable;

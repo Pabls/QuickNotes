@@ -1,7 +1,6 @@
 package com.ar4i.quicknotes.presentation.note.notedetails.views;
 
 import com.ar4i.quicknotes.data.models.NoteVm;
-import com.ar4i.quicknotes.presentation.base.views.IMvpView;
 import com.ar4i.quicknotes.presentation.note.base.ISuccessView;
 
 import io.reactivex.Observable;

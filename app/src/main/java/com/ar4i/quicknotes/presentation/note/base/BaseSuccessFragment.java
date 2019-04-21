@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Group;
 
-public abstract class SuccessFragment extends BaseFragment implements ISuccessView {
+public abstract class BaseSuccessFragment extends BaseFragment implements ISuccessView {
 
     //==========================================start UI============================================
 

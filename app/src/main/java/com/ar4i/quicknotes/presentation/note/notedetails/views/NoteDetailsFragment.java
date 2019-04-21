@@ -1,7 +1,5 @@
 package com.ar4i.quicknotes.presentation.note.notedetails.views;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,8 +8,7 @@ import android.widget.TextView;
 import com.ar4i.quicknotes.R;
 import com.ar4i.quicknotes.data.models.NoteVm;
 import com.ar4i.quicknotes.presentation.base.presenter.IPresenter;
-import com.ar4i.quicknotes.presentation.base.views.BaseFragment;
-import com.ar4i.quicknotes.presentation.note.base.SuccessFragment;
+import com.ar4i.quicknotes.presentation.note.base.BaseSuccessFragment;
 import com.ar4i.quicknotes.presentation.note.notedetails.presenter.NoteDetailsPresenter;
 import com.ar4i.quicknotes.presentation.note.noteediting.views.NoteEditingFragment;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -20,11 +17,9 @@ import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.Group;
 import io.reactivex.Observable;
 
-public class NoteDetailsFragment extends SuccessFragment implements INoteDetailsView {
+public class NoteDetailsFragment extends BaseSuccessFragment implements INoteDetailsView {
 
     private static final String EXTRA_NOTE = "com.ar4i.quicknotes.extra_note";
 

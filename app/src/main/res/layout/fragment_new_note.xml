@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:visibility="visible"
         app:constraint_referenced_ids="
-            til_title, til_body, fab_send, img_logo" />
+            til_title, til_body, fab_send, img_logo, rv_tags" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_title"
@@ -21,11 +21,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_8"
-        android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="@dimen/margin_8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/rv_tags">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_title"
@@ -34,6 +34,21 @@
             android:hint="@string/new_note_fragment.edittext.hint.title" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_tags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_8"
+        android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginEnd="@dimen/margin_8"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_body"

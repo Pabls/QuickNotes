@@ -15,7 +15,7 @@
 
         <activity
             android:name=".presentation.signin.views.SignInActivity"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

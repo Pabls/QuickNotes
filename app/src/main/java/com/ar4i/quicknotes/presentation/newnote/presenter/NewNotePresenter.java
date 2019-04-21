@@ -2,14 +2,18 @@ package com.ar4i.quicknotes.presentation.newnote.presenter;
 
 import com.ar4i.quicknotes.R;
 import com.ar4i.quicknotes.data.models.NoteVm;
+import com.ar4i.quicknotes.data.models.TagVm;
 import com.ar4i.quicknotes.data.models.UserVm;
 import com.ar4i.quicknotes.domain.auth.IAuthInteractor;
 import com.ar4i.quicknotes.domain.notes.INotesInteractor;
 import com.ar4i.quicknotes.domain.resources.IResourceInteractor;
+import com.ar4i.quicknotes.domain.tags.ITagsInteractor;
 import com.ar4i.quicknotes.presentation.base.presenter.BasePresenter;
 import com.ar4i.quicknotes.presentation.newnote.views.INewNoteView;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -18,19 +22,23 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
 
     public NewNotePresenter(INotesInteractor iNotesInteractor,
                             IAuthInteractor iAuthInteractor,
-                            IResourceInteractor iResourceInteractor) {
+                            IResourceInteractor iResourceInteractor,
+                            ITagsInteractor iTagsInteractor) {
         this.iNotesInteractor = iNotesInteractor;
         this.iAuthInteractor = iAuthInteractor;
         this.iResourceInteractor = iResourceInteractor;
+        this.iTagsInteractor = iTagsInteractor;
     }
     // region========================================Fields=========================================
 
     INotesInteractor iNotesInteractor;
     IAuthInteractor iAuthInteractor;
     IResourceInteractor iResourceInteractor;
+    ITagsInteractor iTagsInteractor;
     private String title;
     private String body;
     private UserVm userVm;
+    private List<TagVm> tagVms = new ArrayList<>();
 
     // endregion-------------------------------------Fields-----------------------------------------
 
@@ -56,12 +64,25 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
 
         track(getView().onSendButtonClick()
                 .subscribe(click -> {
+                    List<TagVm> selectedTags = new ArrayList<>();
+                    if (tagVms != null && !tagVms.isEmpty()) {
+                        for (TagVm tagVm : tagVms) {
+                            if (tagVm.isChecked()) {
+                                selectedTags.add(tagVm);
+                            }
+                        }
+                    }
+
                     NoteVm noteVm = new NoteVm(new Timestamp(System.currentTimeMillis()).getTime(),
                             getView().getTitle(),
                             getView().getBody(),
-                            userVm.getUid());
+                            userVm.getUid(),
+                            selectedTags);
                     sendNewNote(noteVm);
                 }));
+
+        track(getView().onTagClick()
+                .subscribe(index -> tagVms.get(index).checkTag()));
     }
 
     //-------------------------------------------end extends BasePresenter<INewNoteView>------------
@@ -85,6 +106,7 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
                 .doOnEvent((res, error) -> getView().hideLoad())
                 .subscribe(user -> {
                     this.userVm = user;
+                    getTags(this.userVm.getUid());
                 }, error -> getView().showMessage(error.getMessage())));
     }
 
@@ -93,13 +115,13 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> {
-                    clearinput();
+                    clearInput();
                     deleteLastNote();
                     getView().notifyOfSuccess();
                 }));
     }
 
-    private void clearinput() {
+    private void clearInput() {
         String emptyString = iResourceInteractor.getStringById(R.string.common_empty);
         getView().setTitle(emptyString);
         getView().setBody(emptyString);
@@ -138,6 +160,16 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
 
     private void enableSendButton() {
         getView().enableSendButton(!title.isEmpty() && !body.isEmpty());
+    }
+
+    private void getTags(String userId) {
+        track(iTagsInteractor.getTags(userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(tags -> {
+                    tagVms = tags;
+                    getView().setTags(tagVms);
+                }));
     }
 
     // endregion-------------------------------------Private methods--------------------------------

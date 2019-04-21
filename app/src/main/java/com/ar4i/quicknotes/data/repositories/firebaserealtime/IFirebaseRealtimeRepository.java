@@ -20,5 +20,5 @@ public interface IFirebaseRealtimeRepository {
 
     Completable sendTag(TagVm tagVm);
 
-    Observable<List<TagVm>> getTags();
+    Observable<List<TagVm>> getTags(String userId);
 }

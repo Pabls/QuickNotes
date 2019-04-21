@@ -33,8 +33,9 @@ public class ViewModule {
     @Provides
     NewNotePresenter provideNewNotePresenter(NotesInteractor notesInteractor,
                                              AuthInteractor authInteractor,
-                                             ResourceInteractor resourceInteractor) {
-        return new NewNotePresenter(notesInteractor, authInteractor, resourceInteractor);
+                                             ResourceInteractor resourceInteractor,
+                                             TagsInteractor tagsInteractor) {
+        return new NewNotePresenter(notesInteractor, authInteractor, resourceInteractor, tagsInteractor);
     }
 
     @Provides

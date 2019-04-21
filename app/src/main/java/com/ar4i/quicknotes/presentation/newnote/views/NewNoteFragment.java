@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.ar4i.quicknotes.R;
+import com.ar4i.quicknotes.data.models.TagVm;
 import com.ar4i.quicknotes.presentation.base.presenter.IPresenter;
 import com.ar4i.quicknotes.presentation.base.views.BaseFragment;
 import com.ar4i.quicknotes.presentation.newnote.presenter.NewNotePresenter;
@@ -17,12 +18,16 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Group;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.Observable;
 
 public class NewNoteFragment extends BaseFragment implements INewNoteView {
@@ -35,6 +40,7 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
 
     @Inject
     NewNotePresenter newNotePresenter;
+    TagsAdapter tagsAdapter;
 
     // endregion-------------------------------------Fields-----------------------------------------
 
@@ -47,6 +53,7 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
     FloatingActionButton fabSendNote;
     ConstraintLayout clContainer;
     Group group;
+    RecyclerView rvTags;
 
     // endregion-------------------------------------UI---------------------------------------------
 
@@ -104,6 +111,11 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
     }
 
     @Override
+    public Observable<Integer> onTagClick() {
+        return tagsAdapter.itemClickEvent();
+    }
+
+    @Override
     public String getTitle() {
         return etTitle.getText().toString();
     }
@@ -111,6 +123,12 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
     @Override
     public String getBody() {
         return etBody.getText().toString();
+    }
+
+    @Override
+    public void setTags(List<TagVm> tagVms) {
+        rvTags.setVisibility(tagVms != null && !tagVms.isEmpty() ? View.VISIBLE : View.GONE);
+        tagsAdapter.addAllAndNotify(tagVms);
     }
 
     @Override
@@ -167,9 +185,11 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
         clContainer.removeViewAt(clContainer.getChildCount() - 1);
         group.setVisibility(View.VISIBLE);
         etTitle.requestFocus();
+        tagsAdapter.notifyDataSetChanged();
     }
 
     private void initView() {
+        tagsAdapter = new TagsAdapter();
         tilTitle = getActivity().findViewById(R.id.til_title);
         tilBody = getActivity().findViewById(R.id.til_body);
         etTitle = getActivity().findViewById(R.id.et_title);
@@ -177,6 +197,11 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
         fabSendNote = getActivity().findViewById(R.id.fab_send);
         clContainer = getActivity().findViewById(R.id.cl_container);
         group = getActivity().findViewById(R.id.group);
+        rvTags = getActivity().findViewById(R.id.rv_tags);
+
+        rvTags.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        rvTags.setAdapter(tagsAdapter);
+
         etTitle.clearFocus();
         etBody.clearFocus();
     }

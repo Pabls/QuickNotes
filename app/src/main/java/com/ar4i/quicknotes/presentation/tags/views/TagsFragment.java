@@ -1,10 +1,14 @@
 package com.ar4i.quicknotes.presentation.tags.views;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.ar4i.quicknotes.R;
@@ -20,6 +24,8 @@ import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Group;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import io.reactivex.Observable;
@@ -44,6 +50,8 @@ public class TagsFragment extends BaseFragment implements ITagsView {
     View vSelectedColor;
     EditText etTagName;
     FloatingActionButton fabAdd;
+    ConstraintLayout clContainer;
+    Group group;
 
     //-------------------------------------------end UI---------------------------------------------
 
@@ -129,16 +137,52 @@ public class TagsFragment extends BaseFragment implements ITagsView {
         ColorSelectionFragment.newInstance().show(getActivity().getSupportFragmentManager(), ColorSelectionFragment.TAG);
     }
 
+    @Override
+    public void notifyOfSuccess() {
+        hideKeyboard();
+        showSuccessfulView();
+    }
+
 
     //-------------------------------------------end implements ITagsView---------------------------
 
 
     //==========================================start Private methods===============================
 
+    private void showSuccessfulView() {
+        group.setVisibility(View.GONE);
+        View.inflate(getActivity(), R.layout.view_done, clContainer);
+        clContainer.setAlpha(0.0f);
+        clContainer.animate()
+                .setDuration(1500)
+                .alpha(1.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        removeSuccessView();
+                    }
+                });
+    }
+
+    private void hideKeyboard() {
+        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+    }
+
+    private void removeSuccessView() {
+        clContainer.removeViewAt(clContainer.getChildCount() - 1);
+        group.setVisibility(View.VISIBLE);
+        setTag(getResources().getString(R.string.common_empty));
+        etTagName.requestFocus();
+    }
+
     private void initView() {
         vSelectedColor = getActivity().findViewById(R.id.v_selected_color);
         etTagName = getActivity().findViewById(R.id.et_name);
         fabAdd = getActivity().findViewById(R.id.fab_add);
+        clContainer = getActivity().findViewById(R.id.cl_tag_view_container);
+        group = getActivity().findViewById(R.id.tag_view_group);
     }
 
     private void initViewModel() {

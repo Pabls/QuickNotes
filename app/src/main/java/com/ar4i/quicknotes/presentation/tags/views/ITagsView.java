@@ -25,4 +25,6 @@ public interface ITagsView extends IMvpView {
 
     void showColorSelectionDialog();
 
+    void notifyOfSuccess();
+
 }

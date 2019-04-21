@@ -2,22 +2,26 @@ package com.ar4i.quicknotes.data.entities;
 
 import com.google.firebase.database.Exclude;
 
+import java.util.List;
+
 public class Note {
     // region========================================Fields=========================================
 
     public long timestamp;
     public String title;
     public String body;
+    public List<Tag> tags;
 
     // endregion-------------------------------------Fields-----------------------------------------
 
     public Note() {
     }
 
-    public Note(long timestamp, String title, String body) {
+    public Note(long timestamp, String title, String body, List<Tag> tags) {
         this.timestamp = timestamp;
         this.title = title;
         this.body = body;
+        this.tags = tags;
     }
 
     // region========================================SET/GET========================================
@@ -45,6 +49,10 @@ public class Note {
     public void setBody(String body) {
         this.body = body;
     }
+    @Exclude
+    public List<Tag> getTags() { return tags; }
+    @Exclude
+    public void setTags(List<Tag> tags) { this.tags = tags; }
 
     // endregion-------------------------------------SET/GET----------------------------------------
 }

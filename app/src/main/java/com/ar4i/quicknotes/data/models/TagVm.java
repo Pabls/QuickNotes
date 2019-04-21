@@ -1,12 +1,15 @@
 package com.ar4i.quicknotes.data.models;
 
-public class TagVm {
+import java.io.Serializable;
+
+public class TagVm implements Serializable {
 
     //==========================================start Fields========================================
 
     private String name;
     private int color;
     private String userId;
+    private boolean checked;
 
     //-------------------------------------------end Fields-----------------------------------------
 
@@ -29,6 +32,14 @@ public class TagVm {
 
     public String getUserId() {
         return userId;
+    }
+
+    public void checkTag() {
+        checked = !checked;
+    }
+
+    public boolean isChecked() {
+        return checked;
     }
 
     //-------------------------------------------end SET/GET----------------------------------------

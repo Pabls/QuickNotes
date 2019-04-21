@@ -2,16 +2,20 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cl_container"
+    android:id="@+id/cl_tag_view_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/group"
+        android:id="@+id/tag_view_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        app:constraint_referenced_ids="til_name, fab_send, v_selected_color" />
+        app:constraint_referenced_ids="
+        til_name,
+        fab_add,
+        tv_select_color_label,
+        v_selected_color" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_name"
@@ -53,7 +57,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/v_selected_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/v_selected_color" />
-    
+
 
     <View
         android:id="@+id/v_selected_color"

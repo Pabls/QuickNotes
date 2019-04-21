@@ -74,7 +74,7 @@ public class TagsPresenter extends BasePresenter<ITagsView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> {
-                    
+                    getView().notifyOfSuccess();
                 }));
 
     }

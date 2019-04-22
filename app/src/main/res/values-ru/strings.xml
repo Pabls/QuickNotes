@@ -28,7 +28,7 @@
 
 
     <string name="tags_fragment.edittext.hint.tag_name">Введите новый тег</string>
-    <string name="tags_fragment.text.tag_color">ВЫБЕРИТЕ ЦВЕТ</string>
+    <string name="tags_fragment.text.tag_color">ЦВЕТ ТЕГА</string>
 
     <string name="color_selection_fragment.text.title">ВЫБЕРИТЕ ЦВЕТ</string>
     <string name="color_selection_fragment.positive_button_text">Сохранить</string>

@@ -52,23 +52,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_8"
+        android:layout_marginTop="@dimen/margin_8"
         android:text="@string/tags_fragment.text.tag_color"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="@+id/v_selected_color"
+        android:textSize="@dimen/tag_color_label_size"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/v_selected_color" />
+        app:layout_constraintTop_toBottomOf="@+id/til_name" />
 
 
     <View
         android:id="@+id/v_selected_color"
-        android:layout_width="@dimen/medium_icon_size"
-        android:layout_height="@dimen/medium_icon_size"
+        android:layout_width="@dimen/tag_color_view_size"
+        android:layout_height="@dimen/tag_color_view_size"
         android:layout_marginStart="@dimen/margin_8"
-        android:layout_marginTop="@dimen/margin_8"
         android:background="@color/dark_yellow"
         android:clickable="true"
         android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_select_color_label"
         app:layout_constraintStart_toEndOf="@+id/tv_select_color_label"
-        app:layout_constraintTop_toBottomOf="@+id/til_name" />
+        app:layout_constraintTop_toTopOf="@+id/tv_select_color_label" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

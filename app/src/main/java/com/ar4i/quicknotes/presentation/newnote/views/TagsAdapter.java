@@ -18,4 +18,14 @@ public class TagsAdapter extends BaseAdapter<TagVm, TagsViewHolder> {
         View view = layoutInflater.inflate(R.layout.item_tags, parent, false);
         return new TagsViewHolder(view, getSubject());
     }
+
+    public void clearState() {
+        if (viewHolders != null && !viewHolders.isEmpty()) {
+            for (TagsViewHolder tagsViewHolder : viewHolders) {
+                if (tagsViewHolder.chipTag != null) {
+                    tagsViewHolder.chipTag.setChecked(false);
+                }
+            }
+        }
+    }
 }

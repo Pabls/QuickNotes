@@ -116,6 +116,7 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> {
                     clearInput();
+                    clearTagsState();
                     deleteLastNote();
                     getView().notifyOfSuccess();
                 }));
@@ -170,6 +171,14 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
                     tagVms = tags;
                     getView().setTags(tagVms);
                 }));
+    }
+
+    private void clearTagsState() {
+        if (tagVms != null && !tagVms.isEmpty()) {
+            for (TagVm tagVm : tagVms) {
+                tagVm.setChecked(false);
+            }
+        }
     }
 
     // endregion-------------------------------------Private methods--------------------------------

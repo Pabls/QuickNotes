@@ -34,6 +34,10 @@ public class TagVm implements Serializable {
         return userId;
     }
 
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
     public void checkTag() {
         checked = !checked;
     }

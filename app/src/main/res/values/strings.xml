@@ -26,7 +26,7 @@
     <string name="notes_item.text.created_at">created at :</string>
 
     <string name="tags_fragment.edittext.hint.tag_name">Enter new tag</string>
-    <string name="tags_fragment.text.tag_color">SELECT COLOR</string>
+    <string name="tags_fragment.text.tag_color">TAG COLOR</string>
 
     <string name="color_selection_fragment.text.title">SELECT COLOR</string>
     <string name="color_selection_fragment.positive_button_text">Save</string>

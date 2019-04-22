@@ -20,6 +20,8 @@
     <dimen name="title_size">24sp</dimen>
     <dimen name="button_text_size">18sp</dimen>
     <dimen name="message_text_size">24sp</dimen>
+    <dimen name="tag_color_label_size">36sp</dimen>
+    <dimen name="tag_color_view_size">48dp</dimen>
 
     <dimen name="loader_size">128dp</dimen>
 

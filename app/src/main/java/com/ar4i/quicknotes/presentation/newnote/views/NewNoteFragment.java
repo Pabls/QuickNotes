@@ -186,6 +186,7 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
         group.setVisibility(View.VISIBLE);
         etTitle.requestFocus();
         tagsAdapter.notifyDataSetChanged();
+        tagsAdapter.clearState();
     }
 
     private void initView() {

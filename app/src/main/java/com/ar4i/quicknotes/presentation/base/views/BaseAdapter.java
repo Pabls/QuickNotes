@@ -13,6 +13,7 @@ public abstract class BaseAdapter<T, VH extends BaseViewHolder<T>> extends Recyc
     //==========================================start Fields========================================
 
     protected List<T> items = new ArrayList<>();
+    protected List<VH> viewHolders = new ArrayList<>();
     private PublishSubject<Integer> itemViewClickSubject = PublishSubject.create();
 
     //-------------------------------------------end Fields-----------------------------------------
@@ -21,6 +22,7 @@ public abstract class BaseAdapter<T, VH extends BaseViewHolder<T>> extends Recyc
 
     @Override
     public void onBindViewHolder(@NonNull VH vh, int i) {
+        viewHolders.add(vh);
         vh.bind(getItem(i));
     }
 

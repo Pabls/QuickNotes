@@ -108,7 +108,6 @@ public class NotesFragment extends BaseFragment implements INotesView {
         tvNoNotes = getActivity().findViewById(R.id.tv_no_notes);
         rvNotes = getActivity().findViewById(R.id.rv_notes);
 
-        rvNotes.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         rvNotes.setAdapter(notesAdapter);
     }
 

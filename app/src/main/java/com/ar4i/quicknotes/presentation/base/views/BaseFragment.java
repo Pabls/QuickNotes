@@ -1,12 +1,14 @@
 package com.ar4i.quicknotes.presentation.base.views;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.ar4i.quicknotes.BuildConfig;
 import com.ar4i.quicknotes.R;
 import com.ar4i.quicknotes.app.App;
 import com.ar4i.quicknotes.app.di.components.ApplicationComponent;
@@ -46,6 +48,8 @@ public abstract class BaseFragment extends Fragment implements IMvpView {
 
         if(getPresenter() != null)
             getPresenter().attachView(this);
+
+        enableStrictMode();
     }
 
     @Override
@@ -96,4 +100,21 @@ public abstract class BaseFragment extends Fragment implements IMvpView {
 
     //-------------------------------------------end Abstract methods-------------------------------
 
+    // region========================================Private methods================================
+
+    private void enableStrictMode() {
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects()
+                    .detectLeakedClosableObjects()
+                    .penaltyLog()
+                    .build());
+        }
+    }
+
+    // endregion-------------------------------------Private methods--------------------------------
 }

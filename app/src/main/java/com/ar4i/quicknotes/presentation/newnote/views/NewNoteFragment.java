@@ -190,7 +190,6 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
     }
 
     private void initView() {
-        tagsAdapter = new TagsAdapter();
         tilTitle = getActivity().findViewById(R.id.til_title);
         tilBody = getActivity().findViewById(R.id.til_body);
         etTitle = getActivity().findViewById(R.id.et_title);
@@ -200,7 +199,7 @@ public class NewNoteFragment extends BaseFragment implements INewNoteView {
         group = getActivity().findViewById(R.id.group);
         rvTags = getActivity().findViewById(R.id.rv_tags);
 
-        rvTags.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        tagsAdapter = new TagsAdapter();
         rvTags.setAdapter(tagsAdapter);
 
         etTitle.clearFocus();

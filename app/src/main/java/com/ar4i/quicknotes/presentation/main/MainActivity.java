@@ -1,8 +1,5 @@
 package com.ar4i.quicknotes.presentation.main;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +10,9 @@ import android.view.MenuItem;
 import com.ar4i.quicknotes.R;
 import com.ar4i.quicknotes.presentation.tags.views.TagsActivity;
 import com.google.android.material.tabs.TabLayout;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 public class MainActivity extends AppCompatActivity {
 

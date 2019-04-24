@@ -21,23 +21,19 @@ import io.reactivex.schedulers.Schedulers;
 public class NewNotePresenter extends BasePresenter<INewNoteView> {
 
     public NewNotePresenter(INotesInteractor iNotesInteractor,
-                            IAuthInteractor iAuthInteractor,
                             IResourceInteractor iResourceInteractor,
                             ITagsInteractor iTagsInteractor) {
         this.iNotesInteractor = iNotesInteractor;
-        this.iAuthInteractor = iAuthInteractor;
         this.iResourceInteractor = iResourceInteractor;
         this.iTagsInteractor = iTagsInteractor;
     }
     // region========================================Fields=========================================
 
     INotesInteractor iNotesInteractor;
-    IAuthInteractor iAuthInteractor;
     IResourceInteractor iResourceInteractor;
     ITagsInteractor iTagsInteractor;
     private String title;
     private String body;
-    private UserVm userVm;
     private List<TagVm> tagVms = new ArrayList<>();
 
     // endregion-------------------------------------Fields-----------------------------------------
@@ -49,7 +45,7 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
     public void attachView(INewNoteView view) {
         super.attachView(view);
         getLastNote();
-        getUser();
+        getTags();
         track(getView().onTitleChanged()
                 .subscribe(title -> {
                     this.title = title;
@@ -76,7 +72,6 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
                     NoteVm noteVm = new NoteVm(new Timestamp(System.currentTimeMillis()).getTime(),
                             getView().getTitle(),
                             getView().getBody(),
-                            userVm.getUid(),
                             selectedTags);
                     sendNewNote(noteVm);
                 }));
@@ -97,18 +92,6 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
     // endregion-------------------------------------Public methods---------------------------------
 
     // region========================================Private methods================================
-
-    private void getUser() {
-        track(iAuthInteractor.getUser()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(_void -> getView().showLoad())
-                .doOnEvent((res, error) -> getView().hideLoad())
-                .subscribe(user -> {
-                    this.userVm = user;
-                    getTags(this.userVm.getUid());
-                }, error -> getView().showMessage(error.getMessage())));
-    }
 
     private void sendNewNote(NoteVm noteVm) {
         track(iNotesInteractor.sendNote(noteVm)
@@ -163,12 +146,13 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
         getView().enableSendButton(!title.isEmpty() && !body.isEmpty());
     }
 
-    private void getTags(String userId) {
-        track(iTagsInteractor.getTags(userId)
+    private void getTags() {
+        track(iTagsInteractor.getTags()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(tags -> {
-                    tagVms = tags;
+                .subscribe(tag -> {
+                    if(tag != null)
+                    tagVms.add(tag);
                     getView().setTags(tagVms);
                 }));
     }

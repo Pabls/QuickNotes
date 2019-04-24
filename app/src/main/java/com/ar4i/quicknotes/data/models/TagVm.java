@@ -8,16 +8,14 @@ public class TagVm implements Serializable {
 
     private String name;
     private int color;
-    private String userId;
     private boolean checked;
 
     //-------------------------------------------end Fields-----------------------------------------
 
 
-    public TagVm(String name, int color, String userId) {
+    public TagVm(String name, int color) {
         this.name = name;
         this.color = color;
-        this.userId = userId;
     }
 
     //==========================================start SET/GET=======================================
@@ -28,10 +26,6 @@ public class TagVm implements Serializable {
 
     public int getColor() {
         return color;
-    }
-
-    public String getUserId() {
-        return userId;
     }
 
     public void setChecked(boolean checked) {

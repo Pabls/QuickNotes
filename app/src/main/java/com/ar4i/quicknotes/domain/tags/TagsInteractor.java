@@ -3,8 +3,6 @@ package com.ar4i.quicknotes.domain.tags;
 import com.ar4i.quicknotes.data.models.TagVm;
 import com.ar4i.quicknotes.data.repositories.firebaserealtime.IFirebaseRealtimeRepository;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
@@ -32,8 +30,8 @@ public class TagsInteractor implements ITagsInteractor {
     }
 
     @Override
-    public Observable<List<TagVm>> getTags(String userId) {
-        return iFirebaseRealtimeRepository.getTags(userId);
+    public Observable<TagVm> getTags() {
+        return iFirebaseRealtimeRepository.getTags();
     }
 
     //-------------------------------------------end implements ITagsInteracto----------------------

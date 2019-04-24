@@ -3,7 +3,6 @@ package com.ar4i.quicknotes.app.di.modules;
 import com.ar4i.quicknotes.domain.auth.AuthInteractor;
 import com.ar4i.quicknotes.domain.notes.NotesInteractor;
 import com.ar4i.quicknotes.domain.resources.ResourceInteractor;
-import com.ar4i.quicknotes.domain.tags.ITagsInteractor;
 import com.ar4i.quicknotes.domain.tags.TagsInteractor;
 import com.ar4i.quicknotes.presentation.colorselection.presenter.ColorSelectionPresenter;
 import com.ar4i.quicknotes.presentation.newnote.presenter.NewNotePresenter;
@@ -26,16 +25,15 @@ public class ViewModule {
     }
 
     @Provides
-    NotesPresenter provideNotesPresenter(NotesInteractor notesInteractor, AuthInteractor authInteractor) {
-        return new NotesPresenter(notesInteractor, authInteractor);
+    NotesPresenter provideNotesPresenter(NotesInteractor notesInteractor) {
+        return new NotesPresenter(notesInteractor);
     }
 
     @Provides
     NewNotePresenter provideNewNotePresenter(NotesInteractor notesInteractor,
-                                             AuthInteractor authInteractor,
                                              ResourceInteractor resourceInteractor,
                                              TagsInteractor tagsInteractor) {
-        return new NewNotePresenter(notesInteractor, authInteractor, resourceInteractor, tagsInteractor);
+        return new NewNotePresenter(notesInteractor, resourceInteractor, tagsInteractor);
     }
 
     @Provides
@@ -49,8 +47,8 @@ public class ViewModule {
     }
 
     @Provides
-    TagsPresenter provideTagsPresenter(TagsInteractor tagsInteractor, AuthInteractor authInteractor) {
-        return new TagsPresenter(tagsInteractor, authInteractor);
+    TagsPresenter provideTagsPresenter(TagsInteractor tagsInteractor) {
+        return new TagsPresenter(tagsInteractor);
     }
 
     @Provides

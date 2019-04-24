@@ -4,17 +4,13 @@ import com.ar4i.quicknotes.data.entities.Note;
 import com.ar4i.quicknotes.data.entities.Tag;
 import com.ar4i.quicknotes.data.models.NoteVm;
 import com.ar4i.quicknotes.data.models.TagVm;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 
@@ -29,6 +25,9 @@ public class FirebaseRealtimeRepository implements IFirebaseRealtimeRepository {
     public static final String NOTES_PATH = "notes";
     public static final String TAGS_PATH = "tags";
     private static DatabaseReference dbRef;
+    private static NotesEventListener notesEventListener;
+    private static TagsEventListener tagsEventListener;
+    private static String userId;
 
     // endregion-------------------------------------Fields-----------------------------------------
 
@@ -60,49 +59,19 @@ public class FirebaseRealtimeRepository implements IFirebaseRealtimeRepository {
     }
 
     @Override
-    public Observable<List<NoteVm>> getNotes(String userId) {
-        return Observable.create(emitter -> {
-            dbRef.child(NOTES_PATH).child(userId).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    List<NoteVm> noteVms = new ArrayList<>();
-                    Iterable<DataSnapshot> iterableDataSnapshot = dataSnapshot.getChildren();
-                    try {
-                        Iterator<DataSnapshot> iterator = iterableDataSnapshot.iterator();
-                        while (iterator.hasNext()) {
-                            Iterator<DataSnapshot> childIterator = iterator.next().getChildren().iterator();
-                            while (childIterator.hasNext()) {
-                                Note res = childIterator.next().getValue(Note.class);
-                                if (res != null) {
+    public Observable<NoteVm> getAddedNote() {
+        return notesEventListener.receivedNote();
+    }
 
-                                    List<TagVm> tagVms = new ArrayList<>();
-                                    if (res.getTags() != null) {
-                                        for (Tag tag : res.getTags()) {
-                                            tagVms.add(new TagVm(tag.getName(), tag.getColor(), userId));
-                                        }
-                                    }
-
-                                    noteVms.add(new NoteVm(res.getTimestamp(), res.getTitle(), res.getBody(), userId, tagVms));
-                                }
-
-                            }
-                        }
-                    } catch (Exception e) {
-                    }
-                    emitter.onNext(noteVms);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                }
-            });
-        });
+    @Override
+    public Observable<NoteVm> getDeletedNote() {
+        return notesEventListener.deletedNote();
     }
 
     @Override
     public Completable sendTag(TagVm tagVm) {
         return Completable.create(emitter -> {
-            dbRef.child(TAGS_PATH).child(tagVm.getUserId())
+            dbRef.child(TAGS_PATH).child(userId)
                     .push()
                     .setValue(new Tag(tagVm.getName(), tagVm.getColor()));
             emitter.onComplete();
@@ -110,31 +79,8 @@ public class FirebaseRealtimeRepository implements IFirebaseRealtimeRepository {
     }
 
     @Override
-    public Observable<List<TagVm>> getTags(String userId) {
-
-        return Observable.create(emitter -> {
-            dbRef.child(TAGS_PATH).child(userId).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    List<TagVm> tagVms = new ArrayList<>();
-                    Iterable<DataSnapshot> iterableDataSnapshot = dataSnapshot.getChildren();
-                    try {
-                        Iterator<DataSnapshot> iterator = iterableDataSnapshot.iterator();
-                        while (iterator.hasNext()) {
-                            Tag res = iterator.next().getValue(Tag.class);
-                            if (res != null)
-                                tagVms.add(new TagVm(res.getName(), res.getColor(), userId));
-                        }
-                    } catch (Exception e) {
-                    }
-                    emitter.onNext(tagVms);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                }
-            });
-        });
+    public Observable<TagVm> getTags() {
+        return tagsEventListener.receivedTag();
     }
 
     //-------------------------------------------end implements IFirebaseRealtimeRepository---------
@@ -146,6 +92,13 @@ public class FirebaseRealtimeRepository implements IFirebaseRealtimeRepository {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             dbRef = FirebaseDatabase.getInstance().getReference();
             dbRef.keepSynced(true);
+
+            userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            notesEventListener = new NotesEventListener();
+            dbRef.child(NOTES_PATH).child(userId).addChildEventListener(notesEventListener);
+
+            tagsEventListener = new TagsEventListener();
+            dbRef.child(TAGS_PATH).child(userId).addChildEventListener(tagsEventListener);
         }
     }
 
@@ -156,15 +109,15 @@ public class FirebaseRealtimeRepository implements IFirebaseRealtimeRepository {
                 tags.add(new Tag(tagVm.getName(), tagVm.getColor()));
             }
         }
-        dbRef.child(NOTES_PATH).child(noteVm.getUserId())
-                .child(getUid(noteVm.getUserId(), noteVm.getTimestamp()))
+        dbRef.child(NOTES_PATH).child(userId)
+                .child(getUid(userId, noteVm.getTimestamp()))
                 .push()
                 .setValue(new Note(noteVm.getTimestamp(), noteVm.getTitle(), noteVm.getBody(), tags));
     }
 
     private void deleteNote(NoteVm noteVm) {
-        dbRef.child(NOTES_PATH).child(noteVm.getUserId())
-                .child(getUid(noteVm.getUserId(), noteVm.getTimestamp()))
+        dbRef.child(NOTES_PATH).child(userId)
+                .child(getUid(userId, noteVm.getTimestamp()))
                 .removeValue();
     }
 

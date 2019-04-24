@@ -1,5 +1,7 @@
 package com.ar4i.quicknotes.data.models;
 
+import androidx.annotation.Nullable;
+
 import java.io.Serializable;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -12,7 +14,6 @@ public class NoteVm implements Serializable {
     private long timestamp;
     private String title;
     private String body;
-    private String userId;
     private List<TagVm> tags;
 
     public NoteVm() {
@@ -23,11 +24,10 @@ public class NoteVm implements Serializable {
         this.body = body;
     }
 
-    public NoteVm(long timestamp, String title, String body, String userId, List<TagVm> tags) {
+    public NoteVm(long timestamp, String title, String body, List<TagVm> tags) {
         this(title, body);
         this.timestamp = timestamp;
         this.creationDate = convert(timestamp);
-        this.userId = userId;
         this.tags = tags;
     }
 
@@ -47,10 +47,6 @@ public class NoteVm implements Serializable {
 
     public String getBody() {
         return body;
-    }
-
-    public String getUserId() {
-        return userId;
     }
 
     public void setTitle(String title) {
@@ -81,4 +77,24 @@ public class NoteVm implements Serializable {
 
     // endregion-------------------------------------Private methods--------------------------------
 
+    // region========================================Override=======================================
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof NoteVm)) {
+            return false;
+        }
+        NoteVm nvm = (NoteVm) obj;
+        return nvm.timestamp == timestamp;
+    }
+
+    // endregion-------------------------------------Override---------------------------------------
 }

@@ -3,8 +3,6 @@ package com.ar4i.quicknotes.data.repositories.firebaserealtime;
 import com.ar4i.quicknotes.data.models.NoteVm;
 import com.ar4i.quicknotes.data.models.TagVm;
 
-import java.util.List;
-
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 
@@ -15,9 +13,11 @@ public interface IFirebaseRealtimeRepository {
 
     Completable updateNote(NoteVm noteVm);
 
-    Observable<List<NoteVm>> getNotes(String userId);
+    Observable<NoteVm> getAddedNote();
+
+    Observable<NoteVm> getDeletedNote();
 
     Completable sendTag(TagVm tagVm);
 
-    Observable<List<TagVm>> getTags(String userId);
+    Observable<TagVm> getTags();
 }

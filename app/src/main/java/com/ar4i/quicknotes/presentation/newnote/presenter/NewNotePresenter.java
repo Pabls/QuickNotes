@@ -3,8 +3,6 @@ package com.ar4i.quicknotes.presentation.newnote.presenter;
 import com.ar4i.quicknotes.R;
 import com.ar4i.quicknotes.data.models.NoteVm;
 import com.ar4i.quicknotes.data.models.TagVm;
-import com.ar4i.quicknotes.data.models.UserVm;
-import com.ar4i.quicknotes.domain.auth.IAuthInteractor;
 import com.ar4i.quicknotes.domain.notes.INotesInteractor;
 import com.ar4i.quicknotes.domain.resources.IResourceInteractor;
 import com.ar4i.quicknotes.domain.tags.ITagsInteractor;
@@ -150,9 +148,8 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
         track(iTagsInteractor.getTags()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(tag -> {
-                    if(tag != null)
-                    tagVms.add(tag);
+                .subscribe(tags -> {
+                    tagVms = tags;
                     getView().setTags(tagVms);
                 }));
     }

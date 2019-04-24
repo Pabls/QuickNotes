@@ -52,13 +52,8 @@ public class NotesInteractor implements INotesInteractor {
     }
 
     @Override
-    public Observable<NoteVm> getAddedNote() {
-        return iFirebaseRealtimeRepository.getAddedNote();
-    }
-
-    @Override
-    public Observable<NoteVm> getDeletedNote() {
-        return iFirebaseRealtimeRepository.getDeletedNote();
+    public Observable<List<NoteVm>> getNotes() {
+        return iFirebaseRealtimeRepository.getNotes();
     }
 
     @Override

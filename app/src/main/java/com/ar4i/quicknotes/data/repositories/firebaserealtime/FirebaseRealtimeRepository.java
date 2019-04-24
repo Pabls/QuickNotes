@@ -59,13 +59,8 @@ public class FirebaseRealtimeRepository implements IFirebaseRealtimeRepository {
     }
 
     @Override
-    public Observable<NoteVm> getAddedNote() {
-        return notesEventListener.receivedNote();
-    }
-
-    @Override
-    public Observable<NoteVm> getDeletedNote() {
-        return notesEventListener.deletedNote();
+    public Observable<List<NoteVm>> getNotes() {
+        return notesEventListener.receivedNotes();
     }
 
     @Override
@@ -79,7 +74,7 @@ public class FirebaseRealtimeRepository implements IFirebaseRealtimeRepository {
     }
 
     @Override
-    public Observable<TagVm> getTags() {
+    public Observable<List<TagVm>> getTags() {
         return tagsEventListener.receivedTag();
     }
 
@@ -95,10 +90,10 @@ public class FirebaseRealtimeRepository implements IFirebaseRealtimeRepository {
 
             userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
             notesEventListener = new NotesEventListener();
-            dbRef.child(NOTES_PATH).child(userId).addChildEventListener(notesEventListener);
+            dbRef.child(NOTES_PATH).child(userId).addValueEventListener(notesEventListener);
 
             tagsEventListener = new TagsEventListener();
-            dbRef.child(TAGS_PATH).child(userId).addChildEventListener(tagsEventListener);
+            dbRef.child(TAGS_PATH).child(userId).addValueEventListener(tagsEventListener);
         }
     }
 

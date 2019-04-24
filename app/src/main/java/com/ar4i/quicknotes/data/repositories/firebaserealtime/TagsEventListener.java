@@ -1,22 +1,25 @@
 package com.ar4i.quicknotes.data.repositories.firebaserealtime;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.ar4i.quicknotes.data.entities.Tag;
 import com.ar4i.quicknotes.data.models.TagVm;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 
-public class TagsEventListener implements ChildEventListener {
+public class TagsEventListener implements ValueEventListener {
 
     // region========================================Fields=========================================
 
-    private BehaviorSubject<TagVm> addedTagSub = BehaviorSubject.create();
+    private BehaviorSubject<List<TagVm>> addedTagSub = BehaviorSubject.create();
 
     // endregion-------------------------------------Fields-----------------------------------------
 
@@ -24,22 +27,19 @@ public class TagsEventListener implements ChildEventListener {
     // region========================================implements ChildEventListener==================
 
     @Override
-    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-        Tag addedTag = getTag(dataSnapshot);
-        TagVm tagVm = convert(addedTag);
-        setAddedTagVm(tagVm);
-    }
-
-    @Override
-    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-    }
-
-    @Override
-    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-    }
-
-    @Override
-    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        List<TagVm> tagVms = new ArrayList<>();
+        Iterable<DataSnapshot> iterableDataSnapshot = dataSnapshot.getChildren();
+        try {
+            Iterator<DataSnapshot> iterator = iterableDataSnapshot.iterator();
+            while (iterator.hasNext()) {
+                Tag res = iterator.next().getValue(Tag.class);
+                if (res != null)
+                    tagVms.add(new TagVm(res.getName(), res.getColor()));
+            }
+        } catch (Exception e) {
+        }
+        setAddedTagVms(tagVms);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class TagsEventListener implements ChildEventListener {
 
     // region========================================Public methods=================================
 
-    public Observable<TagVm> receivedTag() {
+    public Observable<List<TagVm>> receivedTag() {
         return addedTagSub.distinctUntilChanged();
     }
 
@@ -60,27 +60,8 @@ public class TagsEventListener implements ChildEventListener {
 
     // region========================================Private methods================================
 
-    private Tag getTag(DataSnapshot dataSnapshot) {
-        Tag tag;
-        try {
-            tag = dataSnapshot.getValue(Tag.class);
-        } catch (Exception e) {
-            tag = null;
-        }
-        return tag;
-    }
-
-    private TagVm convert(Tag addedTag) {
-        TagVm tagVm = null;
-        if (addedTag != null) {
-            tagVm = new TagVm(addedTag.getName(), addedTag.getColor());
-        }
-        return tagVm;
-    }
-
-    private void setAddedTagVm(TagVm tagVm) {
-        if (tagVm != null)
-            addedTagSub.onNext(tagVm);
+    private void setAddedTagVms(List<TagVm> tagVms) {
+        addedTagSub.onNext(tagVms);
     }
 
     // endregion-------------------------------------Private methods--------------------------------

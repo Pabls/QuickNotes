@@ -29,8 +29,7 @@ public class NotesPresenter extends BasePresenter<INotesView> {
     @Override
     public void attachView(INotesView view) {
         super.attachView(view);
-        getAddedNotes();
-        getDeletedNote();
+        getNotes();
         track(getView().onListItemClick()
                 .subscribe(index -> getView().navigateToNoteActivity(notes.get(index))));
     }
@@ -39,27 +38,16 @@ public class NotesPresenter extends BasePresenter<INotesView> {
 
     // region========================================Private methods================================
 
-    private void getAddedNotes() {
-        track(iNotesInteractor.getAddedNote()
+    private void getNotes() {
+        track(iNotesInteractor.getNotes()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(note -> {
-                    this.notes.add(0, note);
-                    getView().showNoNotesMessage(notes == null || notes.isEmpty());
+                .subscribe(notes -> {
+                    this.notes = notes;
+                    getView().showNoNotesMessage(notes.isEmpty());
                     getView().setNotes(notes);
                 }, error -> getView().showMessage(error.getMessage())));
     }
 
-    private void getDeletedNote() {
-        track(iNotesInteractor.getDeletedNote()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(note -> {
-                    if (!this.notes.isEmpty()) {
-                        notes.remove(note);
-                    }
-                    getView().setNotes(notes);
-                }, error -> getView().showMessage(error.getMessage())));
-    }
     // endregion-------------------------------------Private methods--------------------------------
 }

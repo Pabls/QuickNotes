@@ -18,9 +18,7 @@ public interface INotesInteractor {
 
     Completable sendNote(NoteVm noteVm);
 
-    Observable<NoteVm> getAddedNote();
-
-    Observable<NoteVm> getDeletedNote();
+    Observable<List<NoteVm>> getNotes();
 
     Completable removeNote(NoteVm noteVm);
 

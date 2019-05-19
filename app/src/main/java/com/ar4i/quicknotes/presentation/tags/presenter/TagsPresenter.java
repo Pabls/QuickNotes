@@ -4,6 +4,7 @@ import com.ar4i.quicknotes.data.models.TagVm;
 import com.ar4i.quicknotes.domain.tags.ITagsInteractor;
 import com.ar4i.quicknotes.presentation.base.presenter.BasePresenter;
 import com.ar4i.quicknotes.presentation.tags.views.ITagsView;
+import com.ar4i.quicknotes.presentation.utils.RxUtils;
 
 import javax.inject.Inject;
 
@@ -51,8 +52,7 @@ public class TagsPresenter extends BasePresenter<ITagsView> {
 
     private void sendTag(TagVm tagVm) {
         track(iTagsInteractor.sendTag(tagVm)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(upstream -> RxUtils.applySchedulers(upstream))
                 .subscribe(() -> {
                     getView().notifyOfSuccess();
                 }));

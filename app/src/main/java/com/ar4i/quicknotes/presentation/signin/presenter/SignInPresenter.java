@@ -5,6 +5,7 @@ import com.ar4i.quicknotes.domain.resources.IResourceInteractor;
 import com.ar4i.quicknotes.domain.auth.IAuthInteractor;
 import com.ar4i.quicknotes.presentation.base.presenter.BasePresenter;
 import com.ar4i.quicknotes.presentation.signin.views.ISignInView;
+import com.ar4i.quicknotes.presentation.utils.RxUtils;
 
 import javax.inject.Inject;
 
@@ -66,10 +67,9 @@ public class SignInPresenter extends BasePresenter<ISignInView> {
 
     //==========================================start Private methods===============================
 
-    private void getUser(){
+    private void getUser() {
         track(iAuthInteractor.getUser()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(upstream -> RxUtils.applySchedulers(upstream))
                 .doOnSubscribe(_void -> getView().showLoad())
                 .doOnEvent((res, error) -> getView().hideLoad())
                 .subscribe(user -> {
@@ -81,8 +81,7 @@ public class SignInPresenter extends BasePresenter<ISignInView> {
 
     private void trySignIn(String email, String password) {
         track(iAuthInteractor.signIn(email, password)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(upstream -> RxUtils.applySchedulers(upstream))
                 .doOnSubscribe(_void -> getView().showLoad())
                 .doOnEvent((res, error) -> getView().hideLoad())
                 .subscribe(success -> {
@@ -91,16 +90,13 @@ public class SignInPresenter extends BasePresenter<ISignInView> {
                     } else {
                         tryCreateUser(email, password);
                     }
-                }, error -> {
-                    getView().showMessage(error.getMessage());
-                }));
+                }, error -> getView().showMessage(error.getMessage())));
     }
 
 
     private void tryCreateUser(String email, String password) {
         track(iAuthInteractor.createUser(email, password)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(upstream -> RxUtils.applySchedulers(upstream))
                 .doOnSubscribe(_void -> getView().showLoad())
                 .doOnEvent((res, error) -> getView().hideLoad())
                 .subscribe(success -> {

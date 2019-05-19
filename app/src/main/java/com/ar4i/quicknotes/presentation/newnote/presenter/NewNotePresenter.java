@@ -8,6 +8,7 @@ import com.ar4i.quicknotes.domain.resources.IResourceInteractor;
 import com.ar4i.quicknotes.domain.tags.ITagsInteractor;
 import com.ar4i.quicknotes.presentation.base.presenter.BasePresenter;
 import com.ar4i.quicknotes.presentation.newnote.views.INewNoteView;
+import com.ar4i.quicknotes.presentation.utils.RxUtils;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -93,8 +94,7 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
 
     private void sendNewNote(NoteVm noteVm) {
         track(iNotesInteractor.sendNote(noteVm)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(upstream -> RxUtils.applySchedulers(upstream))
                 .subscribe(() -> {
                     clearInput();
                     clearTagsState();
@@ -111,8 +111,7 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
 
     private void saveNote(NoteVm noteVm) {
         track(iNotesInteractor.saveNote(noteVm)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(upstream -> RxUtils.applySchedulers(upstream))
                 .doOnSubscribe(_void -> getView().showLoad())
                 .doOnTerminate(() -> getView().hideLoad())
                 .subscribe());
@@ -120,8 +119,7 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
 
     private void getLastNote() {
         track(iNotesInteractor.getLastUnsavedNote()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(upstream -> RxUtils.applySchedulers(upstream))
                 .doOnSubscribe(_void -> getView().showLoad())
                 .doOnEvent((res, error) -> getView().hideLoad())
                 .subscribe(noteVm -> {
@@ -135,8 +133,7 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
 
     private void deleteLastNote() {
         track(iNotesInteractor.deleteLastNote()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(upstream -> RxUtils.applySchedulers(upstream))
                 .subscribe());
     }
 
@@ -146,8 +143,7 @@ public class NewNotePresenter extends BasePresenter<INewNoteView> {
 
     private void getTags() {
         track(iTagsInteractor.getTags()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(upstream -> RxUtils.applySchedulers(upstream))
                 .subscribe(tags -> {
                     tagVms = tags;
                     getView().setTags(tagVms);

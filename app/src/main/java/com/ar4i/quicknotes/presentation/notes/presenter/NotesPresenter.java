@@ -4,12 +4,10 @@ import com.ar4i.quicknotes.data.models.NoteVm;
 import com.ar4i.quicknotes.domain.notes.INotesInteractor;
 import com.ar4i.quicknotes.presentation.base.presenter.BasePresenter;
 import com.ar4i.quicknotes.presentation.notes.views.INotesView;
+import com.ar4i.quicknotes.presentation.utils.RxUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class NotesPresenter extends BasePresenter<INotesView> {
 
@@ -40,8 +38,7 @@ public class NotesPresenter extends BasePresenter<INotesView> {
 
     private void getNotes() {
         track(iNotesInteractor.getNotes()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(upstream -> RxUtils.applySchedulers(upstream))
                 .subscribe(notes -> {
                     this.notes = notes;
                     getView().showNoNotesMessage(notes.isEmpty());

@@ -4,9 +4,7 @@ import com.ar4i.quicknotes.data.models.NoteVm;
 import com.ar4i.quicknotes.domain.notes.INotesInteractor;
 import com.ar4i.quicknotes.presentation.base.presenter.BasePresenter;
 import com.ar4i.quicknotes.presentation.note.notedetails.views.INoteDetailsView;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+import com.ar4i.quicknotes.presentation.utils.RxUtils;
 
 public class NoteDetailsPresenter extends BasePresenter<INoteDetailsView> {
 
@@ -48,8 +46,7 @@ public class NoteDetailsPresenter extends BasePresenter<INoteDetailsView> {
 
     private void removeNote(NoteVm noteVm) {
         track(iNotesInteractor.removeNote(noteVm)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(upstream -> RxUtils.applySchedulers(upstream))
                 .subscribe(() -> getView().showSuccessfulView(),
                         error -> getView().showMessage(error.getMessage())));
     }
